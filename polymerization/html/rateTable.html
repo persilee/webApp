@@ -1,0 +1,87 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>聚合收款</title>
+	<link rel="stylesheet" type="text/css" href="../lib/mui-master/dist/css/mui.css" />
+	<link rel="stylesheet" type="text/css" href="../css/common.css" />
+	<link href="../lib/mui-master/examples/hello-mui/css/mui.picker.css" rel="stylesheet" />
+	<link href="../lib/mui-master/examples/hello-mui/css/mui.poppicker.css" rel="stylesheet" />
+	<link rel="stylesheet" href="../css/main.css">
+	<style>
+		.container p{
+			color: #8f8f94;
+			font-size: 12px;
+			margin: 10px 0;
+		}
+		table { width: 100%; min-height: 25px; line-height: 25px; text-align: center; border-color:#8f8f94; border-collapse: collapse;} 
+	</style>
+</head>
+
+<body>
+	<div class="mui-content">
+		<div class="container">
+			<div class="title">费率说明</div>
+			<p>用户使用不同渠道支付，收款费率如下：</p>
+			<table id="rateTable" border="1">
+				<tr>
+					<th>结算时间</th>
+					<th>储蓄卡</th>
+					<th>信用卡</th>
+					<th>微信</th>
+					<th>支付宝</th>
+					<th>蚂蚁花呗</th>
+				</tr>
+			</table>
+		</div>
+	</div>
+
+</body>
+<script src="../js/jquery-3.2.1.js"></script>
+<script src="../lib/mui-master/dist/js/mui.js"></script>
+<script src="../lib/mui-master/js/mui.picker.js"></script>
+<script src="../lib/mui-master/js/mui.poppicker.js"></script>
+<script src="../js/store.legacy.min.js"></script>
+<script src="../js/pathUrl.js"></script>
+<script type="text/javascript">
+	var merchId = store.get('merchId') ? store.get('merchId') : getQueryVariable('merchId');
+	var payMerchId = store.get('merchId') ? store.get('merchId') : getQueryVariable('merchId');
+	// var merchId = '15811813135';
+	console.log('aaa',merchId);
+	
+	(function (mui, doc) {
+		mui.init();
+		mui.ready(function () {
+			$.ajax({
+				type: "get",
+				url: urlPath + "scanpay/rateInquiry.do",
+				data: { merchId: merchId, version: "1.2"},
+				dataType: "json",
+				success: function (response) {
+					console.log(response.data);
+					if(response.code == 200 && response.data){
+						var strTr = `
+						<tr>
+							<td>T+1</td>
+							<td>${response.data.partnerCupRate}‰</td>
+							<td>${response.data.partnerCdnRate}‰</td>
+							<td>${response.data.feeRateWechatpay}‰</td>
+							<td>${response.data.feeRateAlipay}‰</td>
+							<td>${response.data.feeRateHuabei}‰</td>
+						</tr>
+					`;
+						$('#rateTable').append(strTr);
+					}else{
+						mui.alert(response.message)
+					}
+				}
+			});
+		});
+	})(mui, document);
+
+</script>
+
+</html>

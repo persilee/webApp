@@ -1,0 +1,89 @@
+﻿<!DOCTYPE html PUBLIC "-//WAPFORUM//DTD XHTML Mobile 1.0//EN" "http://www.wapforum.org/DTD/xhtml-mobile10.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=Edge">  
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<meta content="yes" name="apple-touch-fullscreen">    
+	    <meta content="black" name="apple-mobile-web-app-status-bar-style"> 
+		<title>审核失败</title>
+		<link rel="stylesheet" type="text/css" href="../lib/mui-master/dist/css/mui.css"/>
+		<link rel="stylesheet" type="text/css" href="../css/common.css"/>
+		<link rel="stylesheet" href="../css/main.css">
+		<style>
+			.mui-content .container {
+				text-align: center;
+				margin-top: 36%;
+			}
+			.mui-content .container img {
+				width: 156px;
+				height: 124px;
+			}
+			.mui-content .container .text-info {
+				margin-top: 10px;
+			}
+			.mui-content .container .text-info .text {
+				font-size: 16px;
+				color: #565656;
+			}
+			.mui-content .container .info {
+				display: flex;
+				color: #9A9A9A;
+				margin: 10px 0 20px;
+			}
+			.mui-content .container .info  .info-title {
+				flex: 1;
+				text-align: end;
+			}
+			.mui-content .container .info  .info-content {
+				flex: 2;
+				text-align: start;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="mui-content">
+			<div class="container">
+				<img src="../img/auditFailure.png" alt="">
+				<div class="text-info">
+					<div class="text">您提交的入驻申请未通过审核</div>
+					<div class="info">
+						<div class="info-title">未通过原因：</div>
+						<div class="info-content"></div>
+					</div>
+					<a class="mui-btn mui-btn-block btn-default" href="./toApplyOne.html">重 试</a>
+					<a class="mui-btn mui-btn-block secondary" href="./toApplyOne.html">返 回</a>
+				</div>
+			</div>
+		</div>
+		
+	</body>
+	<script src="../js/jquery-3.2.1.js"></script>
+	<script src="../lib/mui-master/dist/js/mui.js"></script>
+	<script src="../js/store.legacy.min.js"></script>
+	<script src="../js/pathUrl.js"></script>
+	<script type="text/javascript">
+
+		var merchId = store.get('merchId');
+		var payMerchId = store.get('merchId');
+		
+		(function (mui, doc) {
+			mui.init();
+			mui.ready(function () {
+				$('.text-info .info-content').text(getQueryVariable('desc'));
+			});
+		})(mui, document);
+
+		function getQueryVariable(variable) {
+				var query = decodeURI(window.location.search.substring(1));
+				var vars = query.split("&");
+				for (var i = 0; i < vars.length; i++) {
+					var pair = vars[i].split("=");
+					if (pair[0] == variable) { return pair[1]; }
+				}
+				return ('');
+			}
+	</script>
+</html>

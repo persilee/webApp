@@ -1,0 +1,34 @@
+{
+    "list": [
+        {
+            "totalDate": "20190810",
+            "dataList": [
+                {
+                    "businessCode": "12",
+                    "settDate": "12:26:33",
+                    "transAmt": 25
+                },
+                {
+                    "businessCode": "13",
+                    "settDate": "11:21:13",
+                    "transAmt": 345
+                }
+            ]
+        },
+        {
+            "totalDate": "20190809",
+            "dataList": [
+                {
+                    "businessCode": "14",
+                    "settDate": "10:11:14",
+                    "transAmt": 79
+                },
+                {
+                    "businessCode": "12",
+                    "settDate": "09:33:36",
+                    "transAmt": 634
+                }
+            ]
+        }
+    ]
+}

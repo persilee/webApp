@@ -1,0 +1,391 @@
+.mui-content {
+	background-color: #f2f2f2;
+}
+
+.mui-content .tips {
+	padding: 5px;
+	background-color: bisque;
+	text-align: center;
+}
+
+.mui-content .tips .tip-info {
+	color: dimgray;
+}
+
+.mui-content .container {
+	padding: 26px;
+}
+
+.mui-content .container .title {
+	font-size: 16px;
+	margin-bottom: 6px;
+	font-weight: bold;
+}
+
+.mui-content .container .describe {
+	font-size: 14px;
+	margin-bottom: 6px;
+}
+
+.mui-content .container .steps {
+	margin: 0 auto;
+	width: 94%;
+	height: 60px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	position: relative;
+}
+
+.mui-content .container .steps .step-line {
+	width: 100%;
+	height: 3px;
+	background-color: #ccc;
+}
+
+.mui-content .container .steps .step-one,
+.mui-content .container .steps .step-two,
+.mui-content .container .steps .step-three {
+	width: 32px;
+	height: 32px;
+	background-color: white;
+	border: 1px solid #bbb;
+	border-radius: 50%;
+	position: absolute;
+	text-align: center;
+	line-height: 30px;
+}
+
+.mui-content .container .steps .step-one {
+	left: 0;
+}
+
+.mui-content .container .steps .text-one {
+	position: absolute;
+	left: -6px;
+	top: 54px;
+}
+
+.mui-content .container .steps .text-two {
+	position: absolute;
+	top: 54px;
+}
+
+.mui-content .container .steps .step-three {
+	right: 0;
+}
+
+.mui-content .container .steps .text-three {
+	position: absolute;
+	right: -8px;
+	top: 54px;
+	z-index: 1;
+}
+
+.mui-content .container .from-box {
+	margin-top: 30px;
+}
+
+.mui-content .container .from-box .mui-input-group {
+	background-color: #F2F2F2;
+}
+
+.mui-content .container .from-box .mui-input-group .mui-input-row {
+	flex: 1;
+	height: 50px;
+	background-color: #fff;
+	margin: 10px 0px;
+	border-radius: 4px;
+	box-shadow: 0px 1px 6px #8888881f;
+	border: 1px solid #8888884d;
+}
+
+.mui-content .container .from-box .mui-input-group .three-row-box .mui-input-row {
+	margin: 0px 2px;
+}
+.mui-content .container .from-box .mui-input-group .three-row-box .mui-input-row:first-child {
+	margin-left: 0px;
+}
+.mui-content .container .from-box .mui-input-group .three-row-box .mui-input-row:last-child {
+	margin-right: 0px;
+}
+.mui-content .container .from-box .mui-input-group::before,
+.mui-content .container .from-box .mui-input-group::after {
+	background-color: transparent;
+}
+
+.mui-content .container .from-box .mui-input-group .mui-input-row:after {
+	background-color: transparent;
+}
+
+.mui-content .container .from-box .mui-input-row label {
+	position: relative;
+	text-align: center;
+	line-height: 50px;
+	font-size: 14px;
+	color: #3d3c3c;
+	letter-spacing: 2.2vw;
+	padding-left: 2.2%;
+}
+
+.mui-content .container .from-box .mui-input-group .three-row-box .mui-input-row label {
+	letter-spacing: 0;
+	padding-left: 0;
+}
+
+.mui-content .container .from-box .mui-input-row label::after {
+	position: absolute;
+	right: 0;
+	height: 100%;
+	width: 1px;
+	content: '';
+	-webkit-transform: scaleY(.5);
+	transform: scaleY(.5);
+	background-color: #c8c7cc;
+}
+
+.mui-content .container .from-box .mui-input-row label ~ input,
+.mui-input-row label ~ select,
+.mui-input-row label ~ textarea {
+	padding: 0 10px;
+}
+
+.mui-content .container .from-box .mui-input-row label ~ input::placeholder {
+	font-size: 12px;
+	color: #ccc;
+	letter-spacing: 2px;
+}
+
+.mui-content .container .from-box .three-row-box,
+.mui-content .container .from-box .two-row-box {
+	display: flex;
+	flex-direction: row;
+	margin: 10px 0;
+}
+
+.mui-btn-block.btn-default {
+	padding: 10px 0;
+	background-color: #d53c27;
+	color: #fff;
+	font-size: 16px;
+	margin: 10px 0;
+}
+.from-box .file-input-container {
+	display: flex;
+	flex-direction: row;
+}
+.from-box .file-input-container .file-input-box {
+	height: 136px;
+	background: rgba(255, 255, 255, 1);
+	flex: 1;
+	display: flex;
+	justify-content: center;
+    align-items: center;
+    border-radius: 4px;
+    box-shadow: 0px 1px 6px #8888881f;
+}
+
+.from-box .file-input-container .file-input-box .box-bg {
+	height: 120px;
+	width: 92%;
+    background-color: #f2f2f2;
+    background:url('../img/fileInputBg.png') no-repeat center center;
+    background-size: 90% 90%;
+    display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.from-box .file-input-container .file-input-box:last-child {
+	margin-left: 6px;
+}
+
+.from-box .file-input-container .file-input-box .box-bg .box-camera {
+    width: 90%;
+    height: 90%;
+    display: flex;
+	justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+.from-box .file-input-container .file-input-box .box-bg .box-camera .info-camera {
+    font-size: 14px;
+    letter-spacing: 2px;
+    color: #ccc;
+}
+.from-box .file-input-container .file-input-box .box-bg .box-camera .img-camera {
+    padding-top: 8%;
+}
+.from-box .file-input-container .file-input-box .box-bg .box-camera .img-camera img{
+    width: 36px;
+    height: 30px;
+}
+
+.mui-input-row .mui-input-clear ~ .mui-icon-clear, .mui-input-row .mui-input-speech ~ .mui-icon-speech, .mui-input-row .mui-input-password ~ .mui-icon-eye {
+	top: 15px;
+}
+
+input, textarea, select {
+	font-size: 14px;
+}
+
+.mui-btn-block.secondary {
+	padding: 10px 0;
+    background-color: #fff;
+    color: #333;
+    font-size: 16px;
+}
+
+.text-btn {
+	border: 0;
+	color: #007aff;
+}
+
+.mui-toast-container {
+	bottom: 16%;
+}
+
+.validation-box {
+	padding: 0 4px;
+	color: #dd524d;
+	display: none;
+	margin: 10px 0;
+}
+
+.mui-content .container .from-box .mui-input-group .mui-input-row.error {
+	border: 1px solid #dd524d;
+}
+
+.mui-content .container .from-box .mui-input-group .mui-input-row.sucess {
+	border: 1px solid yellowgreen;
+}
+
+.from-box .file-input-container .file-input-box.inline.error, .from-box .file-input-container .file-input-box.error {
+	border: 1px solid #dd524d;
+}
+
+.from-box .file-input-container .file-input-box.inline.sucess, .from-box .file-input-container .file-input-box.sucess {
+	border: 1px solid yellowgreen;
+}
+
+.from-box .file-input-container .column-line {
+	flex: 1;
+}
+
+.mui-content .container .from-box .rate-btn {
+	text-align: right;
+	padding: 0 6px;
+}
+
+.mui-content .container .from-box .rate-btn .btn-href {
+	color: #007aff;
+}
+
+.mui-content .container .from-box .dsc {
+	text-align: end;
+	padding: 0 6px;
+	line-height: 1;
+	color: #8f8f94;
+}
+
+.mui-content .container .from-box .dsc img {
+    width: 14px;
+    height: 14px;
+    position: relative;
+    top: 2px;
+    margin-right: 2px;
+}
+
+html {
+	-webkit-text-size-adjust: none;
+}
+
+.loading.file-input-box,
+.loading.btn-loading-box {
+  position: relative;
+  cursor: default;
+  text-shadow: none!important;
+  color: transparent!important;
+  opacity: 1;
+  pointer-events: auto;
+  -webkit-transition: all 0s linear,opacity .1s ease;
+  transition: all 0s linear,opacity .1s ease;
+  background: rgba(0, 0, 0, 0.06) !important;
+}
+
+.loading.btn-loading-box {
+	pointer-events: none;
+    cursor: default;
+}
+
+.loading.file-input-box > div {
+	display: none !important;
+}
+.loading.file-input-box:before,
+.loading.btn-loading-box:before {
+    position: absolute;
+    content: '';
+    top: 44%;
+    left: 46%;
+    margin: -.54285714em 0 0 -.54285714em;
+    width: 2.28571429em;
+    height: 2.28571429em;
+    border-radius: 500rem;
+    border: .2em solid rgba(0,0,0,.15);
+}
+.loading.btn-loading-box:before{
+	top: 32%;
+    left: 50%;
+    margin: -.2em 0 0 -.2em;
+    width: 1em;
+    height: 1em;
+}
+.loading.file-input-box:after,
+.loading.btn-loading-box:after {
+    position: absolute;
+    content: '';
+    top: 44%;
+    left: 46%;
+    margin: -.54285714em 0 0 -.54285714em;
+    width: 2.28571429em;
+    height: 2.28571429em;
+    -webkit-animation: button-spin .6s linear;
+    animation: button-spin .6s linear;
+    -webkit-animation-iteration-count: infinite;
+    animation-iteration-count: infinite;
+    border-radius: 500rem;
+    border-color: #FFF transparent transparent;
+    border-style: solid;
+    border-width: .2em;
+    box-shadow: 0 0 0 1px transparent;
+}
+.loading.btn-loading-box:after{
+	top: 32%;
+    left: 50%;
+    margin: -.2em 0 0 -.2em;
+    width: 1em;
+    height: 1em;
+}
+@-webkit-keyframes button-spin {
+  from {
+    -webkit-transform: rotate(0deg);
+    transform: rotate(0deg);
+  }
+
+  to {
+    -webkit-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes button-spin {
+  from {
+    -webkit-transform: rotate(0deg);
+    transform: rotate(0deg);
+  }
+
+  to {
+    -webkit-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
+}

@@ -1,0 +1,105 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>聚合收款</title>
+	<link rel="stylesheet" type="text/css" href="../lib/mui-master/dist/css/mui.css" />
+	<link rel="stylesheet" type="text/css" href="../css/common.css" />
+	<link href="../lib/mui-master/examples/hello-mui/css/mui.picker.css" rel="stylesheet" />
+	<link href="../lib/mui-master/examples/hello-mui/css/mui.poppicker.css" rel="stylesheet" />
+	<link rel="stylesheet" href="../css/main.css">
+	<style>
+		.success-box {
+			margin-top: 26%;
+			display: flex;
+			justify-content: center;
+   	 		align-items: center;
+    		flex-direction: column;
+		}
+		.success-box .img-box img{
+			width: 66px;
+			height: 66px;
+		}
+		.success-box .info {
+			font-size: 20px;
+    		margin: 10px 0 16px;
+		}
+		.success-box .des {
+    		color: #8f8f94;
+		}
+		.success-box .divider {
+			width: 100%;
+			border-bottom: 1px solid  #ddd;
+			margin: 10px 0;
+		}
+		.success-box .des-box {
+			color: #8f8f94;
+			display: flex;
+			justify-content: space-between;
+			flex-direction: row;
+			width: 100%;
+			padding: 4px;
+
+		}
+	</style>
+</head>
+
+<body>
+	<div class="mui-content">
+		<div class="container">
+			<div class="success-box">
+				<div class="img-box"><img src="../img/success.png" alt=""></div>
+				<div class="info">提现申请已提交</div>
+				<div class="des">预计到账时间: 2小时</div>
+				<div class="divider"></div>
+				<div class="des-box">
+					<div class="right-info">提现金额</div>
+					<div id="amount" class="left-info"></div>
+				</div>
+				<div class="des-box">
+					<div class="right-info">到账银行卡</div>
+					<div id="bankName" class="left-info"></div>
+				</div>
+				<div class="des-box">
+					<div class="right-info">手续费</div>
+					<div id="withdrawFee" class="left-info"></div>
+				</div>
+				<a class="mui-btn mui-btn-block btn-default" style="margin-top: 30px" href="../html/payIndex.html">完 成</a>
+			</div>
+		</div>
+	</div>
+
+</body>
+<script src="../js/jquery-3.2.1.js"></script>
+<script src="../lib/mui-master/dist/js/mui.js"></script>
+<script src="../js/store.legacy.min.js"></script>
+<script src="../js/pathUrl.js"></script>
+<script type="text/javascript">
+	var merchId = store.get('merchId');
+	var payMerchId = store.get('merchId');
+	(function (mui, doc) {
+		mui.init();
+		mui.ready(function () {
+			$('#amount').text(`￥ ${ getQueryVariable('amount') }`);
+			$('#bankName').text(`${ getQueryVariable('bankName') }`);
+			$('#withdrawFee').text(`￥ ${ getQueryVariable('withdrawFee') }`);
+			
+		});
+	})(mui, document);
+
+	function getQueryVariable(variable) {
+		var query = decodeURI(window.location.search.substring(1));
+		var vars = query.split("&");
+		for (var i = 0; i < vars.length; i++) {
+			var pair = vars[i].split("=");
+			if (pair[0] == variable) { return pair[1]; }
+		}
+		return ('');
+	}
+
+</script>
+
+</html>

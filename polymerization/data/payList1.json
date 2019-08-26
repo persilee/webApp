@@ -1,0 +1,60 @@
+{
+    "code": 200,
+    "data": {
+        "endRow": 3,
+        "firstPage": 1,
+        "hasNextPage": false,
+        "hasPreviousPage": false,
+        "isFirstPage": true,
+        "isLastPage": true,
+        "lastPage": 1,
+        "list": [
+            {
+                "amount": "0.2",
+                "insertTime": "2019-08-12 11:35:51.0",
+                "merchId": "23424",
+                "orderNo": "O20190812113550mcxx",
+                "status": "03",
+                "statusDesc": "失败",
+                "time": "20190812",
+                "tradeType": "SETTLE"
+            },
+            {
+                "amount": "0.2",
+                "insertTime": "2019-08-12 10:41:24.0",
+                "merchId": "23424",
+                "orderNo": "O20190812104123xnFV",
+                "status": "02",
+                "statusDesc": "已到账",
+                "time": "20190812",
+                "tradeType": "SETTLE"
+            },
+            {
+                "amount": "0.2",
+                "insertTime": "2019-08-12 10:38:38.0",
+                "merchId": "23424",
+                "orderNo": "O20190812103837fn1u",
+                "status": "01",
+                "statusDesc": "提现中",
+                "time": "20190812",
+                "tradeType": "SETTLE"
+            }
+        ],
+        "navigateFirstPage": 1,
+        "navigateLastPage": 1,
+        "navigatePages": 8,
+        "navigatepageNums": [
+            1
+        ],
+        "nextPage": 0,
+        "orderBy": "",
+        "pageNum": 1,
+        "pageSize": 10,
+        "pages": 1,
+        "prePage": 0,
+        "size": 3,
+        "startRow": 1,
+        "total": 3
+    },
+    "message": "获取交易记录成功"
+}

@@ -1,0 +1,63 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>聚合收款</title>
+	<link rel="stylesheet" type="text/css" href="../lib/mui-master/dist/css/mui.css" />
+	<link rel="stylesheet" type="text/css" href="../css/common.css" />
+	<link href="../lib/mui-master/examples/hello-mui/css/mui.picker.css" rel="stylesheet" />
+	<link href="../lib/mui-master/examples/hello-mui/css/mui.poppicker.css" rel="stylesheet" />
+	<link rel="stylesheet" href="../css/main.css">
+	<style>
+		.success-box {
+			margin-top: 26%;
+			display: flex;
+			justify-content: center;
+   	 		align-items: center;
+    		flex-direction: column;
+		}
+		.success-box .img-box img{
+			width: 66px;
+			height: 66px;
+		}
+		.success-box .info {
+			font-size: 20px;
+    		margin: 10px 0 26px;
+		}
+	</style>
+</head>
+
+<body>
+	<div class="mui-content">
+		<div class="container">
+			<div class="success-box">
+				<div class="img-box"><img src="../img/success.png" alt=""></div>
+				<div class="info">结算周期修改成功</div>
+				<a class="mui-btn mui-btn-block btn-default" href="#">返 回</a>
+			</div>
+		</div>
+	</div>
+
+</body>
+<script src="../js/jquery-3.2.1.js"></script>
+<script src="../lib/mui-master/dist/js/mui.js"></script>
+<script src="../lib/mui-master/js/mui.picker.js"></script>
+<script src="../lib/mui-master/js/mui.poppicker.js"></script>
+<script src="../js/store.legacy.min.js"></script>
+<script src="../js/pathUrl.js"></script>
+<script type="text/javascript">
+	var merchId = store.get('merchId');
+	var payMerchId = store.get('merchId');
+	(function (mui, doc) {
+		mui.init();
+		mui.ready(function () {
+			
+		});
+	})(mui, document);
+
+</script>
+
+</html>

@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title></title>
+</head>
+<body>
+    
+    <script src="../js/jquery-3.2.1.js"></script>
+    <script src="../js/store.legacy.min.js"></script>
+    <script src="../js/pathUrl.js"></script>
+    <script type="text/javascript">
+        var merchId = store.get('merchId');
+        var payMerchId = store.get('merchId');
+        var merchId = getQueryVariable('merchId');
+        var version = getQueryVariable('version');
+        var amount = getQueryVariable('amount');
+        if(!merchId){
+            alert('商户号不能为空');
+        }else if(!version){
+            alert('版本号不能为空');
+        }else if(!amount){
+            alert('金额没有设置，请设置金额');
+        }else if(isAli()){
+            alert(`merchId:${merchId}\nversion:${version}\namount:${amount}\n支付宝`);
+        }else if(isUnion()){
+            alert(`merchId:${merchId}\nversion:${version}\namount:${amount}\n云闪付`);
+        }else if(isWechat()){
+            alert(`merchId:${merchId}\nversion:${version}\namount:${amount}\n微信`);
+        }
+        
+        // isAli();
+        // isWechat();
+        function isAli() {
+            var userAgent = navigator.userAgent.toLowerCase();
+            if (userAgent.match(/Alipay/i) == "alipay") {
+                return true;
+            } else {
+                return false;
+            }
+        }
+
+        function isUnion() {
+            var userAgent = navigator.userAgent.toLowerCase();
+            if (userAgent.match(/UnionPay/i) == "unionpay") {
+                return true;
+            } else {
+                return false;
+            }
+        }
+
+        function isWechat() {
+            var userAgent = navigator.userAgent.toLowerCase();
+            if (userAgent.match(/MicroMessenger/i) == "micromessenger") {
+                return true;
+            } else {
+                return false;
+            }
+        }
+
+        function getQueryVariable(variable) {
+            var query = decodeURI(window.location.search.substring(1));
+            var vars = query.split("&");
+            for (var i = 0; i < vars.length; i++) {
+                var pair = vars[i].split("=");
+                if (pair[0] == variable) { return pair[1]; }
+            }
+            return ('');
+        }
+    </script>
+</body>
+</html>

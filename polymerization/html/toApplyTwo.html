@@ -1,0 +1,656 @@
+﻿<!DOCTYPE html PUBLIC "-//WAPFORUM//DTD XHTML Mobile 1.0//EN" "http://www.wapforum.org/DTD/xhtml-mobile10.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=Edge">  
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<meta content="yes" name="apple-touch-fullscreen">    
+	    <meta content="black" name="apple-mobile-web-app-status-bar-style"> 
+		<title>聚合收款</title>
+		<link rel="stylesheet" type="text/css" href="../lib/mui-master/dist/css/mui.css"/>
+		<link rel="stylesheet" type="text/css" href="../css/common.css"/>
+		<link href="../lib/mui-master/examples/hello-mui/css/mui.picker.min.css" rel="stylesheet" />
+		<!-- <link href="../lib/mui-master/examples/hello-mui/css/mui.picker.css" rel="stylesheet" />
+		<link href="../lib/mui-master/examples/hello-mui/css/mui.poppicker.css" rel="stylesheet" /> -->
+		<link rel="stylesheet" href="../css/main.css">
+
+		<style>
+			.mui-content .container .steps .step-two {
+				background-color: #ff0000;
+    			color: #fff;
+			}
+			.from-box .file-input-container .file-input-box.inline {
+				height: 186px;
+			}
+			.from-box .file-input-container .file-input-box.inline .box-bg {
+				height: 172px;
+			}
+			.from-box .file-input-container .file-input-box.inline:last-child,
+			.from-box .file-input-container .file-input-box.inline:first-child {
+				margin: 0;
+			}
+			.from-box .info-label {
+				padding: 10px 6px 4px;
+				font-size: 14px;
+				display: flex;
+			}
+			.from-box .switch {
+				flex: 2;
+				display: flex;
+				justify-content: flex-end;
+				align-items: center;
+			}
+			.from-box .mui-radio input[type='radio'], .mui-checkbox input[type='checkbox'] {
+				top: -4px;
+				right: 0;
+			}
+			.mui-radio label, .mui-checkbox label {
+				padding-right: 28px;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="mui-content">
+			<div class="container">
+				<div class="title">商户收款，申请入驻</div>
+				<div class="describe">法人/经营者姓名必须同本账户姓名一致</div>
+				<div class="steps">
+					<div class="step-line">
+					</div>
+					<div class="step-one">
+						1
+					</div>
+					<div class="text-one">店铺信息</div>
+
+					<div class="step-two">
+						2
+					</div>
+					<div class="text-two">营业执照上传</div>
+					<div class="step-three">
+						3
+					</div>
+					<div class="text-three">设置结算卡</div>
+				</div>
+				<div class="from-box">
+					<form id="businessInfoForm" class="mui-input-group">
+						<div class="file-input-container">
+							<div class="file-input-box inline">
+								<div class="box-bg businessPhoto">
+									<div class="box-camera">
+										<div class="img-camera"><img class="business-img" src="../img/camera.png"></div>
+										<div class="info-camera">营业执照照片</div>
+									</div>
+								</div>
+								<input id="businessPhoto" name="businessPhoto" type="file" hidden>
+							</div>
+						</div>
+						<div id="businessPhoto-info" class="validation-box"></div>
+						<div class="mui-input-row">
+							<label style="letter-spacing: 1.6vw;">营业执照号</label>
+							<input id="businessLicenseCode" name="businessLicenseCode" type="text" class="mui-input-clear" placeholder="请输入营业执照号">
+						</div>
+						<div id="businessLicenseCode-info" class="validation-box"></div>
+						<div class="dsc"><img src="../img/tip.png" alt="">如营业执照号读取不正确，请手动输入</div>
+						<div class="mui-input-row">
+							<label style="letter-spacing: 1vw;">营业执照地址</label>
+							<input id="businessAddress" name="businessAddress" type="text" class="mui-input-clear" placeholder="请输入营业执照地址">
+						</div>
+						<div id="businessAddress-info" class="validation-box"></div>
+						<div class="dsc"><img src="../img/tip.png" alt="">如营业执照地址读取不正确，请手动输入</div>
+						<div class="info-label">
+							<div class="text-label">营业执照有效期:</div>
+							<div class="switch">
+								<div class="mui-checkbox">
+									<label>是否永久</label>
+									<input name="checkbox1" value="Item 1" type="checkbox">
+								</div>
+							</div>
+						</div>
+						<div class="three-row-box date-input" style="margin-bottom: 12px;">
+							<div class="mui-input-row">
+								<label style="letter-spacing: 1.4vw;">开始</label>
+								<input id="beginExpired" name="beginExpired" type="text" data-options='{"type":"date","beginYear":2014,"endYear":2019}' class="btn" placeholder="开始时间" readonly="readonly"></input>
+							</div>
+							<div class="mui-input-row">
+								<label style="letter-spacing: 1.4vw;">结束</label>
+								<input id="endExpired" name="endExpired" type="text" data-options='{"type":"date","beginYear":2014,"endYear":2019}' class="btn" placeholder="结束时间" readonly="readonly"></input>
+							</div>
+						</div>
+						<div id="date-info" class="validation-box"></div>
+						<div class="file-input-container">
+							<div class="column-line">
+								<div class="file-input-box" style="margin-right: 6px;">
+									<div class="box-bg storeHeadPhoto">
+										<div class="box-camera">
+											<div class="img-camera"><img src="../img/camera.png"></div>
+											<div class="info-camera">门店门头照片</div>
+										</div>
+									</div>
+									<input id="storeHeadPhoto" name="storeHeadPhoto" type="file" hidden>
+								</div>
+								<div id="storeHeadPhoto-info" class="validation-box" style="margin-bottom: 0;"></div>
+							</div>
+							<div class="column-line">
+								<div class="file-input-box">
+									<div class="box-bg storeHallPhoto">
+										<div class="box-camera">
+											<div class="img-camera"><img src="../img/camera.png"></div>
+											<div class="info-camera">内景照片</div>
+										</div>
+									</div>
+									<input id="storeHallPhoto" name="storeHallPhoto" type="file" hidden>
+								</div>
+								<div id="storeHallPhoto-info" class="validation-box" style="margin-bottom: 0;"></div>
+							</div>
+						</div>
+						<div class="file-input-container" style="margin: 12px 0">
+							<div class="column-line">
+								<div class="file-input-box" style="margin-right: 6px;">
+									<div class="box-bg storeShopPhoto">
+										<div class="box-camera">
+											<div class="img-camera"><img src="../img/camera.png"></div>
+											<div class="info-camera">外景照片</div>
+										</div>
+									</div>
+									<input id="storeShopPhoto" name="storeShopPhoto" type="file" hidden>
+								</div>
+								<div id="storeShopPhoto-info" class="validation-box" style="margin-bottom: 0;"></div>
+							</div>
+							<div class="column-line">
+								<div class="file-input-box">
+									<div class="box-bg storeCashierPhoto">
+										<div class="box-camera">
+											<div class="img-camera"><img src="../img/camera.png"></div>
+											<div class="info-camera">收银台照片</div>
+										</div>
+									</div>
+									<input id="storeCashierPhoto" name="storeCashierPhoto" type="file" hidden>
+								</div>
+								<div id="storeCashierPhoto-info" class="validation-box" style="margin-bottom: 0;"></div>
+							</div>
+						</div>
+					</form>
+					<a id="twoApplyBtn" class="mui-btn mui-btn-block btn-default" href="javascript:void(0);" style="margin-top: 40px;">下 一
+						步</a>
+				</div>
+			</div>
+		</div>
+		
+	</body>
+	<script src="../js/jquery-3.2.1.js"></script>
+	<script src="../lib/mui-master/dist/js/mui.min.js"></script>
+	<script src="../lib/mui-master/examples/hello-mui/js/mui.picker.min.js"></script>
+	<script src="../js/moment.min.js"></script>
+	<script src="../js/locale/zh-cn.js"></script>
+	<script src="../js/store.legacy.min.js"></script>
+	<script src="../js/pathUrl.js"></script>
+	<script type="text/javascript">
+		var merchId = store.get('merchId');
+		var payMerchId = store.get('merchId');
+		var isPermanent = false;
+		var storePhoto = '';
+		var storePhotoName = '';
+
+		/**
+		 * 读取缓存数据
+		 **/
+		function loadStoreData(){
+			// 营业执照
+			if(store.get('businessLicensePhoto')){
+				console.log(store.get('businessLicensePhoto'));
+				$('#businessLicensePhoto').val(store.get('businessLicensePhoto'));
+				$('.box-bg.businessPhoto .box-camera').css({
+					'background': 'url(' + (store.get('businessLicensePhoto')) + ') no-repeat center center',
+					'background-size': 'inherit',
+				});
+				$('.box-bg.businessPhoto .box-camera .img-camera img').css('display', 'none');
+			}
+			// 营业执照号
+			if(store.get('businessLicenseCode')){
+				console.log(store.get('businessLicenseCode'));
+				$('#businessLicenseCode').val(store.get('businessLicenseCode'));
+			}
+			//营业执照地址 
+			if(store.get('businessAddress')){
+				$('#businessAddress').val(store.get('businessAddress'));
+			}
+			//营业执照有效期 开始
+			if(store.get('beginExpired')){
+				$('#beginExpired').val(store.get('beginExpired'));
+			}
+			//营业执照有效期 结束
+			if (store.get('businessLicenseExpired')) {
+				$('#endExpired').val(store.get('businessLicenseExpired'));
+			}
+			//门店门头照
+			if(store.get('storeHeadPhoto')){
+				// $('#storeHeadPhoto').val(store.get('storeHeadPhoto'));
+				$('.box-bg.storeHeadPhoto .box-camera').css({
+					'background': 'url(' + (store.get('businessLicensePhoto')) + ') no-repeat center center',
+					'background-size': 'inherit',
+				});
+				$('.box-bg.storeHeadPhoto .box-camera .img-camera img').css('display', 'none');
+			}
+			//内景照片
+			if (store.get('storeHallPhoto')) {
+				// $('#storeHallPhoto').val(store.get('storeHallPhoto'));
+				$('.box-bg.storeHallPhoto .box-camera').css({
+					'background': 'url(' + (store.get('storeHallPhoto')) + ') no-repeat center center',
+					'background-size': 'inherit',
+				});
+				$('.box-bg.storeHallPhoto .box-camera .img-camera img').css('display', 'none');
+			}
+			//外景照片
+			if (store.get('storeShopPhoto')) {
+				// $('#storeShopPhoto').val(store.get('storeShopPhoto'));
+				$('.box-bg.storeShopPhoto .box-camera').css({
+					'background': 'url(' + (store.get('storeShopPhoto')) + ') no-repeat center center',
+					'background-size': 'inherit',
+				});
+				$('.box-bg.storeShopPhoto .box-camera .img-camera img').css('display', 'none');
+			}
+			//收银台照片
+			if (store.get('storeCashierPhoto')) {
+				// $('#storeCashierPhoto').val(store.get('storeCashierPhoto'));
+				$('.box-bg.storeCashierPhoto .box-camera').css({
+					'background': 'url(' + (store.get('storeCashierPhoto')) + ') no-repeat center center',
+					'background-size': 'inherit',
+				});
+				$('.box-bg.storeCashierPhoto .box-camera .img-camera img').css('display', 'none');
+			}
+		}
+
+		/*显示图片*/
+		var imgSrc = '';
+		var imgUrl = '';
+		function displayImg(path) {
+			console.log("显示图片");
+			imgSrc = 'file://' + path;
+		}
+
+		function selectImg(inputId) {
+			$('.box-bg.' + inputId).on('click', function (e) {
+				$('#' + inputId).trigger('click');
+
+				return false;
+			});
+
+			$('#' + inputId).on('change', function () {
+				console.log($(this).prop("files")[0] == 'undefined');
+				if($(this).prop("files")[0] == undefined){
+					return;
+				}else{
+					var _this = $(this);
+					$(this).parent('.file-input-box').addClass('loading');
+					var form_data = new FormData();
+					var file_data = $(this).prop("files")[0];
+					switch ($(this).attr('name')) {
+						case 'storeHeadPhoto':
+							form_data.append('file', file_data);
+							form_data.append('fileType', '05');
+							form_data.append('merchId', payMerchId);
+							storePhoto = 'storeHeadPhoto';
+							storePhotoName = '门店门头照片';
+							break;
+						case 'storeHallPhoto':
+							form_data.append('file', file_data);
+							form_data.append('fileType', '07');
+							form_data.append('merchId', payMerchId);
+							storePhoto = 'storeHallPhoto';
+							storePhotoName = '内景照片';
+							break;
+						case 'storeShopPhoto':
+							form_data.append('file', file_data);
+							form_data.append('fileType', '06');
+							form_data.append('merchId', payMerchId);
+							storePhoto = 'storeShopPhoto';
+							storePhotoName = '外景照片';
+							break;
+						case 'storeCashierPhoto':
+							form_data.append('file', file_data);
+							form_data.append('fileType', '04');
+							form_data.append('merchId', payMerchId);
+							storePhoto = 'storeCashierPhoto';
+							storePhotoName = '收银台照片';
+							break;
+						case 'businessPhoto':
+							form_data.append('file', file_data);
+							form_data.append('fileType', '08');
+							form_data.append('merchId', payMerchId);
+							storePhoto = 'businessPhoto';
+							storePhotoName = '营业执照照片';
+							break;
+						default:
+							break;
+					}
+					$.ajax({
+						type: "POST",
+						url: urlPath + "scanpay/uploadMerchPhotoInfo.do",
+						dataType: "json",
+						processData: false,  // 注意：让jQuery不要处理数据
+						contentType: false,  // 注意：让jQuery不要设置contentType
+						data: form_data,
+						// timeout: 120000,
+						success: function (data) {
+							console.log(data.data);
+							if (data.code == '200' && storePhoto == 'businessPhoto' && data.data) {
+								imgUrl = data.data.path;
+								store.set(storePhoto, data.data.path);
+								store.set('businessLicenseCode', data.data.businessLicenseCode);
+								store.set('businessAddress', data.data.businessAddress);
+								store.set('businessLicensePhoto', data.data.path);
+								if (data.data.businessLicenseCode) {
+									$('#businessLicenseCode').val(data.data.businessLicenseCode);
+								}
+								if (data.data.businessAddress) {
+									$('#businessAddress').val(data.data.businessAddress);
+								}
+								if (data.data.beginExpired) {
+									$('#beginExpired').val(moment(data.data.beginExpired).format('YYYY-MM-DD'));
+								}
+								if (data.data.endExpired) {
+									$('#endExpired').val(moment(data.data.endExpired).format('YYYY-MM-DD'));
+								}
+							} else if (data.code == '200' && data.data) {
+								store.set(storePhoto, data.data.path);
+								imgUrl = data.data.path;
+							} else if(data.code == '400' && data.message) {
+								_this.parent('.file-input-box').removeClass('loading');
+								mui.alert(storePhotoName + data.message);
+							}else{
+								_this.parent('.file-input-box').removeClass('loading');
+								mui.alert(storePhotoName + '上传失败');
+							}
+
+							$('.box-bg.' + inputId + ' .box-camera').css({
+								'background': 'url(' + (imgSrc != '' ? imgSrc : imgUrl) + ') no-repeat center center',
+								'background-size': 'inherit',
+							});
+							$('.box-bg.' + inputId + ' .box-camera .img-camera img').css('display', 'none');
+							if (_this.parent('.file-input-box').hasClass('error')) {
+								_this.parent('.file-input-box').removeClass('error').addClass('sucess');
+							}
+
+							_this.parent('.file-input-box').removeClass('loading');
+							$('#' + inputId + '-info').css('display', 'none').text('');
+							_this.val('');
+						},
+						error: function (e) {
+							_this.parent('.file-input-box').removeClass('loading');
+							mui.alert(storePhotoName + '上传失败');
+							_this.val('');
+						}
+					});
+				}
+				
+				return false;
+			});
+		}
+		
+		(function (mui, doc) {
+				$('#beginExpired').attr('data-options', `{"type":"date","beginYear":1920,"endYear":${moment().year()}}`);
+				$('#endExpired').attr('data-options', `{"type":"date","beginYear":${moment().year()},"endYear":${moment().add(100, 'years').year()}}`);
+				mui.init();
+				mui.ready(function () {
+					loadStoreData();
+					selectImg('businessPhoto');
+					selectImg('storeHeadPhoto');
+					selectImg('storeShopPhoto');
+					selectImg('storeHallPhoto');
+					selectImg('storeCashierPhoto');
+					
+					mui('.switch').on('change', 'input', function () {
+						var value = this.checked ? "true" : "false";
+						console.log(value);
+						isPermanent = value;
+						store.set('isPermanent', isPermanent);
+						if(value == 'true') {
+							$('.date-input').css('display', 'none');
+							$('.info-label').css('margin-bottom', '12px');
+							$('#date-info').css('display', 'none');
+							if(!$('#beginExpired').val()){
+								$('#beginExpired').val('1920-01-01');
+							}else{
+								store.set('beginExpired', $('#beginExpired').val());
+							}
+							if (!$('#endExpired').val()) {
+								$('#endExpired').val('长期');
+								store.set('businessLicenseExpired', '长期');
+							}else{
+								store.set('endExpired', $('#endExpired').val());
+								$('#endExpired').val('长期');
+								store.set('businessLicenseExpired', '长期');
+							}
+							isDateValidator = true;
+						}else{
+							$('.date-input').css('display', 'flex');
+							$('.info-label').css('margin-bottom', '0px');
+							$('#date-info').css('display', 'block'); 
+							if (store.get('beginExpired')) {
+								$('#beginExpired').val(store.get('beginExpired'));
+							}
+							if (store.get('endExpired') && store.get('endExpired') != '长期') {
+								$('#endExpired').val(store.get('endExpired'));
+							}else{
+								$('#endExpired').val('');
+							}
+							isDateValidator = false;
+						}
+
+						return false;
+					});
+					$('.btn').on('tap', function () {
+						var _self = this;
+						if (_self.picker) {
+							_self.picker.show(function (rs) {
+								_self.picker.dispose();
+								_self.picker = null;
+							});
+						} else {
+							var optionsJson = this.getAttribute('data-options') || '{}';
+							var options = JSON.parse(optionsJson);
+							var id = this.getAttribute('id');
+							/*
+							 * 首次显示时实例化组件
+							 * 示例为了简洁，将 options 放在了按钮的 dom 上
+							 * 也可以直接通过代码声明 optinos 用于实例化 DtPicker
+							 */
+							_self.picker = new mui.DtPicker(options);
+							_self.picker.show(function (rs) {
+								/*
+								 * rs.value 拼合后的 value
+								 * rs.text 拼合后的 text
+								 * rs.y 年，可以通过 rs.y.vaue 和 rs.y.text 获取值和文本
+								 * rs.m 月，用法同年
+								 * rs.d 日，用法同年
+								 * rs.h 时，用法同年
+								 * rs.i 分（minutes 的第二个字母），用法同年
+								 */
+									$(_self).val(rs.text);
+									// store.set($(_self).attr('name'), rs.text);
+									
+									if($(_self).parent('.mui-input-row').hasClass('error')){
+										$(_self).parent('.mui-input-row').removeClass('error').addClass('sucess');
+										if($(_self).attr('name') == 'beginExpired' && !$('#endExpired').val()) {
+											$('#date-info').css('display', 'block').text('营业执照结束时间不能为空');
+										}else if($(_self).attr('name') == 'endExpired' && !$('#beginExpired').val()){
+											$('#date-info').css('display', 'block').text('营业执照开始时间不能为空');
+										}else if($('#endExpired').val() && $('#beginExpired').val() && !moment($('#beginExpired').val()).isBefore($('#endExpired').val())){
+											$('#date-info').css('display', 'block').text('营业执照开始时间不能早于结束时间');
+											$('.date-input .mui-input-row').removeClass('sucess').addClass('error');
+											isDateValidator = false;
+										}else if($('#endExpired').val() && $('#beginExpired').val() && moment($('#beginExpired').val()).isBefore($('#endExpired').val())){
+											isDateValidator = true;
+											$('.date-input .mui-input-row').removeClass('error').addClass('sucess');
+											$('#date-info').css('display', 'none').text('');
+										}else {
+											$('#date-info').css('display', 'none').text('');
+										}
+									}
+									if ($('#endExpired').val() && $('#beginExpired').val() && !moment($('#beginExpired').val()).isBefore($('#endExpired').val())) {
+										$('#date-info').css('display', 'block').text('营业执照开始时间不能大于结束时间');
+										$('.date-input .mui-input-row').removeClass('sucess').addClass('error');
+										isDateValidator = false;
+									}else if($('#endExpired').val() && $('#beginExpired').val() && moment($('#beginExpired').val()).isBefore($('#endExpired').val())){
+										isDateValidator = true;
+										if($('.date-input .mui-input-row').hasClass('error')){
+											$('.date-input .mui-input-row').removeClass('error').addClass('sucess');
+										}
+										$('#date-info').css('display', 'none').text('');
+									}
+
+									if($(_self).attr('name') == 'endExpired'){
+										store.set('businessLicenseExpired', moment(rs.text).format('YYYYMMDD'));
+									}
+									
+								/* 
+								 * 返回 false 可以阻止选择框的关闭
+								 * return false;
+								 */
+								/*
+								 * 释放组件资源，释放后将将不能再操作组件
+								 * 通常情况下，不需要示放组件，new DtPicker(options) 后，可以一直使用。
+								 * 当前示例，因为内容较多，如不进行资原释放，在某些设备上会较慢。
+								 * 所以每次用完便立即调用 dispose 进行释放，下次用时再创建新实例。
+								 */
+								_self.picker.dispose();
+								_self.picker = null;
+							});
+						}
+
+					});
+
+					/**
+					* 点击下一步序列化表单
+					**/
+					var isDateValidator = false;
+					var isValidator = false;
+					function dateValidator(){
+						if ($('#endExpired').val() && $('#beginExpired').val() && moment($('#beginExpired').val()).isBefore($('#endExpired').val())) {
+							isDateValidator = true;
+						}
+					}
+					$('#twoApplyBtn').on('click', function(){
+						$('#businessInfoForm input').each(function(i, e) {
+							console.log($(e).val());
+							
+							if(!$(e).val()) {
+								switch ($(this).attr('name')) {
+									case 'businessPhoto':
+										if(!store.get('businessLicensePhoto')){
+											$('#businessPhoto-info').css('display', 'block').text('营业执照不能为空');
+											$(this).parent('.file-input-box').removeClass('sucess').addClass('error');
+											isValidator = false;
+										}
+										break;
+									case 'businessLicenseCode':
+										$('#businessLicenseCode-info').css('display', 'block').text('营业执照号不能为空');
+										$(this).parent('.mui-input-row').removeClass('sucess').addClass('error');
+										isValidator = false;
+										break;
+									case 'businessAddress':
+										$('#businessAddress-info').css('display', 'block').text('营业执照地址不能为空');
+										$(this).parent('.mui-input-row').removeClass('sucess').addClass('error');
+										isValidator = false;
+										break;
+									case 'beginExpired':
+										if(!isPermanent){
+											$('#date-info').css('display', 'block').text('营业执照有效期不能为空');
+											$(this).parent('.mui-input-row').removeClass('sucess').addClass('error');
+											isValidator = false;
+										}
+										break;
+									case 'endExpired':
+										if(!isPermanent){
+											$('#date-info').css('display', 'block').text('营业执照有效期不能为空');
+											$(this).parent('.mui-input-row').removeClass('sucess').addClass('error');
+											isValidator = false;
+										}
+										break;
+									case 'storeHeadPhoto':
+										if (!store.get('storeHeadPhoto')) {
+											$('#storeHeadPhoto-info').css('display', 'block').text('门店门头照片不能为空');
+											$(this).parent('.file-input-box').removeClass('sucess').addClass('error');
+											isValidator = false;
+										}
+										break;
+									case 'storeHallPhoto':
+										if (!store.get('storeHeadPhoto')) {
+											$('#storeHallPhoto-info').css('display', 'block').text('内景照片不能为空');
+											$(this).parent('.file-input-box').removeClass('sucess').addClass('error');
+											isValidator = false;
+										}
+										break;
+									case 'storeShopPhoto':
+										if (!store.get('storeShopPhoto')) {
+											$('#storeShopPhoto-info').css('display', 'block').text('外景照片不能为空');
+											$(this).parent('.file-input-box').removeClass('sucess').addClass('error');
+											isValidator = false;
+										}
+										break;
+									case 'storeCashierPhoto':
+										if (!store.get('storeShopPhoto')) {
+											$('#storeCashierPhoto-info').css('display', 'block').text('收银台不能为空');
+											$(this).parent('.file-input-box').removeClass('sucess').addClass('error');
+											isValidator = false;
+										}
+										break;
+								}
+							}else{
+								isValidator = true;
+							}
+						});
+						dateValidator();
+						console.log(isValidator);
+						
+						console.log(`isDateValidator: ${isDateValidator} \n isValidator: ${isValidator}`);
+						
+						if (isValidator && (store.get('isPermanent') || isDateValidator)) {
+							store.set('storeName', $('#storeName').val());
+							store.set('businessLicenseCode', $('#businessLicenseCode').val());
+							store.set('businessAddress', $('#businessAddress').val());
+							store.set('beginExpired', $('#beginExpired').val());
+							store.set('endExpired', $('#endExpired').val());
+							window.location.href = './toApplyThree.html?merchId=' + merchId;
+						}
+
+						return false;
+					});
+
+					/**
+					 * 表单验证
+					 **/
+					$('input').on('input', function () {
+						console.log($(this).val());
+						console.log($(this).attr('name'));
+
+						if ($(this).val() && $(this).parent('.mui-input-row').hasClass('error')) {
+							switch ($(this).attr('name')) {
+								case 'businessLicenseCode':
+									$('#businessLicenseCode-info').css('display', 'none').text('');
+									$(this).parent('.mui-input-row').removeClass('error').addClass('sucess');
+									break;
+								case 'businessAddress':
+									$('#businessAddress-info').css('display', 'none').text('');
+									$(this).parent('.mui-input-row').removeClass('error').addClass('sucess');
+									break;
+								case 'beginExpired':
+									$('#beginExpired-info').css('display', 'none').text('');
+									$(this).parent('.mui-input-row').removeClass('error').addClass('sucess');
+									break;
+								case 'endExpired':
+									$('#endExpired-info').css('display', 'none').text('');
+									$(this).parent('.mui-input-row').removeClass('error').addClass('sucess');
+									break;
+								default:
+									break;
+							}
+						}
+					});
+				});
+			})(mui, document);
+		
+	</script>
+</html>

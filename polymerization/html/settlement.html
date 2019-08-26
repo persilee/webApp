@@ -1,0 +1,116 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>聚合收款</title>
+	<link rel="stylesheet" type="text/css" href="../lib/mui-master/dist/css/mui.css" />
+	<link rel="stylesheet" type="text/css" href="../css/common.css" />
+	<link href="../lib/mui-master/examples/hello-mui/css/mui.picker.css" rel="stylesheet" />
+	<link href="../lib/mui-master/examples/hello-mui/css/mui.poppicker.css" rel="stylesheet" />
+	<link rel="stylesheet" href="../css/main.css">
+	<style>
+		.text-box {
+			display: flex;
+			line-height: 26px;
+		}
+		.text-box .text {
+			font-size: 14px;
+			font-weight: bold;
+			margin-right: 10px;
+		}
+		.text-box .des {
+			color: #c8c7cc;
+		}
+		.set-box .btn {
+			position: absolute;
+			right: 5px;
+			top: 50%;
+			-webkit-transform: translateY(-50%);
+    		transform: translateY(-50%);
+		}
+		.set-info {
+			padding: 11px 15px;
+			color: #4C4C4C;
+		}
+		.set-content {
+			display: none;
+		}
+		.set-btn {
+			margin-top: 20px;
+			padding: 0 20px;
+		}
+	</style>
+</head>
+
+<body>
+	<div class="mui-content">
+		<div class="set-box">
+			<ul class="mui-table-view">
+				<li class="mui-table-view-cell">
+					<div class="text-box">
+						<div class="text">结算周期</div>
+						<div class="des">T+1 下个工作日结算</div>
+					</div>
+					<div id="changeSet" class="btn"><button class="text-btn">更改</button></div>
+				</li>
+			</ul>
+			<div class="set-info">每月仅可更改一次结算周期</div>
+			<div class="set-content">
+				<ul class="mui-table-view mui-table-view-radio">
+					<li class="mui-table-view-cell mui-selected">
+						<a class="mui-navigate-right">
+							T+1（下个工作日结算）0.06%
+						</a>
+					</li>
+					<li class="mui-table-view-cell">
+						<a class="mui-navigate-right">
+							T+0（工作当日结算）0.09%
+						</a>
+					</li>
+					<li class="mui-table-view-cell">
+						<a class="mui-navigate-right">
+							D+0（当日结算）0.12%
+						</a>
+					</li>
+					<li class="mui-table-view-cell">
+						<a class="mui-navigate-right">
+							D+1（下个自然日结算）0.10%
+						</a>
+					</li>
+				</ul>
+				<div class="set-btn">
+					<a class="mui-btn mui-btn-block btn-default" href="./verification.html">下 一 步</a>
+				</div>
+			</div>
+			
+		</div>
+	</div>
+
+</body>
+<script src="../js/jquery-3.2.1.js"></script>
+<script src="../lib/mui-master/dist/js/mui.js"></script>
+<script src="../lib/mui-master/js/mui.picker.js"></script>
+<script src="../lib/mui-master/js/mui.poppicker.js"></script>
+<script src="../js/store.legacy.min.js"></script>
+<script src="../js/pathUrl.js"></script>
+<script type="text/javascript">
+	var merchId = store.get('merchId');
+	var payMerchId = store.get('merchId');
+	(function (mui, doc) {
+		mui.init();
+		mui.ready(function () {
+			$('#changeSet').on('click', function(){
+				$('.set-content').css('display', 'block');
+			});
+			document.querySelector('.mui-table-view.mui-table-view-radio').addEventListener('selected', function (e) {
+				$('.text-box .des').text(e.detail.el.innerText);
+			});
+		});
+	})(mui, document);
+
+</script>
+
+</html>

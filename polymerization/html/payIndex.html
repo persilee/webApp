@@ -1,0 +1,207 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>聚合收款</title>
+	<link rel="stylesheet" type="text/css" href="../lib/mui-master/dist/css/mui.css" />
+	<link rel="stylesheet" type="text/css" href="../css/common.css" />
+	<link href="../lib/mui-master/examples/hello-mui/css/mui.picker.css" rel="stylesheet" />
+	<link href="../lib/mui-master/examples/hello-mui/css/mui.poppicker.css" rel="stylesheet" />
+	<link rel="stylesheet" href="../css/main.css">
+	<style>
+		.qr-code-box {
+			display: flex;
+			flex-direction: column;
+			justify-content: center;
+			align-items: center;
+			margin-top: 32%;
+		}
+		.qr-code-box .rq-code-title {
+			height: 60px;
+			line-height: 60px;
+			color: #4C4C4C;
+			font-size: 26px;
+		}
+		.qr-code-box .rq-code-num {
+			margin-bottom: 16px;
+			color: #4C4C4C;
+			font-size: 38px;
+			font-weight: bold;
+			display: none;
+		}
+		.qr-code-box .rq-code-img img {
+			width: 200px;
+			height: 200px;
+			margin: 20px 0;
+		}
+		.qr-code-box .qr-code-setting {
+			display: flex;
+			justify-content: space-between;
+			width: 200px;
+		}
+		.qr-code-box .qr-code-setting a {
+			color: #007aff;
+			font-size: 14px;
+		}
+		.qr-code-list {
+			margin-top: 20px;
+		}
+
+		.qr-code-list .mui-table-view {
+			background-color: #ffffff46;
+			font-size: 14px;
+		}
+		.header-box {
+			color: #ffffff;
+			background-color: #d53c27;
+			position: relative;
+			overflow: hidden;
+			z-index: 99;
+		}
+		.header-box .header-context .header-top {
+			height: 106px;
+			display: flex;
+			flex-direction: column;
+			justify-content: center;
+			align-items: center;
+		}
+
+		.header-box .header-context .header-top .top-info {
+			font-size: 12px;
+			padding: 0 10px;
+		}
+
+		.header-box .header-context .header-top .top-num {
+			font-size: 24px;
+			font-weight: 500;
+			margin-top: 12px;
+		}
+		.header-box .header-context .header-bottom {
+			height: 86px;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+		}
+		.header-box .header-context .header-bottom .bottom-item {
+			flex: 1;
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			justify-content: center;
+		}
+		.header-box .header-context .header-bottom .bottom-item .item-num {
+			font-size: 18px;
+			margin-top: 8px;
+			font-weight: 500;
+		}
+		.header-box .header-btn {
+			height: 66px;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+		}
+		.header-box .header-btn .btn {
+			border: 1px solid #fff;
+			color: #fff;
+			width: 30%;
+		}
+		.header-box .bg-img {
+			position: absolute;
+			height: 60%;
+			width: 100%;
+			bottom: 0;
+			background: url('../img/bg_icon.png') no-repeat center center;
+			background-size: cover;
+			z-index: -1;
+		}
+	</style>
+</head>
+
+<body>
+	<div class="mui-content">
+		<div class="header-box">
+			<div class="header-context">
+				<div class="header-top">
+					<div class="top-info">总资产 (元)</div>
+					<div id="total" class="top-num"></div>
+				</div>
+				<div class="header-bottom">
+					<div class="bottom-item">
+						<div class="item-info">昨日收入（元）</div>
+						<div class="item-num">--</div>
+					</div>
+					<div class="bottom-item">
+						<div class="item-info">累计收入（元）</div>
+						<div class="item-num">--</div>
+					</div>
+				</div>
+				<div class="header-btn">
+					<a type="button" class="mui-btn mui-btn-outlined btn" href="./withdraw.html">提 现</a>
+				</div>
+			</div>
+			<div class="bg-img"></div>
+		</div>
+		<div class="qr-code-list">
+			<ul class="mui-table-view">
+				<li class="mui-table-view-cell">
+					<a class="mui-navigate-right" href="./toPay.html">
+						二维码收款
+					</a>
+				</li>
+				<li class="mui-table-view-cell">
+					<a class="mui-navigate-right" href="./payList.html">
+						收款明细
+					</a>
+				</li>
+				<li class="mui-table-view-cell">
+					<a class="mui-navigate-right" href="./withdrawList.html">
+						提现记录
+					</a>
+				</li>
+				<li class="mui-table-view-cell">
+					<a class="mui-navigate-right" href="./rateTable.html">
+						费率说明
+					</a>
+				</li>
+			</ul>
+		</div>
+	</div>
+
+</body>
+<script src="../js/jquery-3.2.1.js"></script>
+<script src="../lib/mui-master/dist/js/mui.js"></script>
+<script src="../lib/mui-master/js/mui.picker.js"></script>
+<script src="../lib/mui-master/js/mui.poppicker.js"></script>
+<script src="../js/jquery.qrcode.min.js"></script>
+<script src="../js/store.legacy.min.js"></script>
+<script src="../js/pathUrl.js"></script>
+<script type="text/javascript">
+	var merchId = store.get('merchId');
+	var payMerchId = store.get('merchId');
+	(function (mui, doc) {
+		mui.init();
+		mui.ready(function () {
+			var url = urlPath + 'scan/getScanMerchAcct.do';
+			$.ajax({
+				type: "post",
+				url: url,
+				async: true,
+				data: {
+					merchId: merchId,
+				},
+				success: function (data) {
+					console.log('getMerchAcct', data);
+					if (data.code == 200) {
+						$('#total').html('￥' + data.data.availBalance);
+					}
+				}
+			});
+		});
+	})(mui, document);
+
+</script>
+
+</html>

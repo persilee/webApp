@@ -1,0 +1,545 @@
+﻿<!DOCTYPE html PUBLIC "-//WAPFORUM//DTD XHTML Mobile 1.0//EN" "http://www.wapforum.org/DTD/xhtml-mobile10.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=Edge">  
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<meta content="yes" name="apple-touch-fullscreen">    
+	    <meta content="black" name="apple-mobile-web-app-status-bar-style"> 
+		<title>聚合收款</title>
+		<link rel="stylesheet" type="text/css" href="../lib/mui-master/dist/css/mui.css"/>
+		<link rel="stylesheet" type="text/css" href="../css/common.css"/>
+		<link href="../lib/mui-master/examples/hello-mui/css/mui.picker.css" rel="stylesheet" />
+		<link href="../lib/mui-master/examples/hello-mui/css/mui.poppicker.css" rel="stylesheet" />
+		<link rel="stylesheet" href="../css/main.css">
+		<style>
+			.mui-content .container .steps .step-three {
+				background-color: #ff0000;
+    			color: #fff;
+			}
+			.mui-content .container .from-box .mui-input-row.btn {
+				display: inline-block;
+				width: 100%;
+				height: 100%;
+				text-align: center;
+				line-height: 50px;
+				font-size: 14px;
+				margin: 0px;
+			}
+
+			.mui-content .container .from-box .mui-input-row.btn a {
+				color: #ff0100;
+			}
+
+			.from-box .file-input-container {
+				margin-top: 6px;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="mui-content">
+			<div class="container">
+				<div class="title">商户收款，申请入驻</div>
+				<div class="describe">法人/经营者姓名必须同本账户姓名一致</div>
+				<div class="steps">
+					<div class="step-line">
+					</div>
+					<div class="step-one">
+						1
+					</div>
+					<div class="text-one">店铺信息</div>
+
+					<div class="step-two">
+						2
+					</div>
+					<div class="text-two">营业执照上传</div>
+					<div class="step-three">
+						3
+					</div>
+					<div class="text-three">设置结算卡</div>
+				</div>
+				<div class="from-box">
+					<form id="setInfoForm" class="mui-input-group">
+						<div class="mui-input-row">
+							<label>结算卡类型</label>
+							<input id="settleAccountType" name="settleAccountType" type="text" class="mui-input-clear" placeholder="请选择结算卡类型" readonly="readonly">
+						</div>
+						<div id="settleAccountType-info" class="validation-box"></div>
+						<div class="mui-input-row">
+							<label>结算卡选择</label>
+							<input id="setCar" name="setCar" type="text" class="" placeholder="请选择结算卡" readonly="readonly">
+						</div>
+						<div id="setCar-info" class="validation-box"></div>
+						<div class="mui-input-row">
+							<label>开户支行</label>
+							<input id="accOpenName" name="accOpenName" type="text" class="mui-input-clear" placeholder="请选择开户支行" readonly="readonly">
+						</div>
+						<div id="accOpenName-info" class="validation-box"></div>
+						<div class="file-input-container">
+							<div class="column-line cardFront">
+								<div class="file-input-box" style="margin-right: 6px;">
+									<div class="box-bg cardFront">
+										<div class="box-camera">
+											<div class="img-camera"><img src="../img/camera.png"></div>
+											<div class="info-camera">银行卡正面照片</div>
+										</div>
+									</div>
+									<input id="cardFront" name="cardFront" type="file" hidden>
+								</div>
+								<div id="cardFront-info" class="validation-box" style="margin-bottom: 0;"></div>
+							</div>
+							<div class="column-line openingLicenseAccountPhoto" style="display: none;">
+								<div class="file-input-box" style="margin-right: 6px;">
+									<div class="box-bg openingLicenseAccountPhoto">
+										<div class="box-camera">
+											<div class="img-camera"><img src="../img/camera.png"></div>
+											<div class="info-camera">开户许可证照片</div>
+										</div>
+									</div>
+									<input id="openingLicenseAccountPhoto" name="openingLicenseAccountPhoto" type="file" hidden>
+								</div>
+								<div id="openingLicenseAccountPhoto-info" class="validation-box" style="margin-bottom: 0;"></div>
+							</div>
+							<div class="column-line">
+								<div class="file-input-box">
+									<div class="box-bg acquiringAgreementPhoto">
+										<div class="box-camera">
+											<div class="img-camera"><img src="../img/camera.png"></div>
+											<div class="info-camera">商户收单协议照片</div>
+										</div>
+									</div>
+									<input id="acquiringAgreementPhoto" name="acquiringAgreementPhoto" type="file" hidden>
+								</div>
+								<div id="acquiringAgreementPhoto-info" class="validation-box" style="margin-bottom: 0;"></div>
+							</div>
+						</div>
+						<div class="mui-input-row">
+							<label>结算周期</label>
+							<input id="setCycle" name="setCycle" type="text" class="" placeholder="请选择结算周期和费率" readonly="readonly">
+						</div>
+						<div id="setCycle-info" class="validation-box"></div>
+						<div class="rate-btn"><a class="btn-href" href="./rateTable.html">费率说明</a></div>
+						<a id="threeApplyBtn" class="btn-loading-box mui-btn mui-btn-block btn-default" href="javascript:void(0);">提 交 审 核</a>
+					</form>
+				</div>
+			</div>
+		</div>
+		
+	</body>
+	<script src="../js/jquery-3.2.1.js"></script>
+	<script src="../lib/mui-master/dist/js/mui.js"></script>
+	<script src="../lib/mui-master/js/mui.picker.js"></script>
+	<script src="../lib/mui-master/js/mui.poppicker.js"></script>
+	<script src="../js/store.legacy.min.js"></script>
+	<script src="../js/pathUrl.js"></script>
+	<script type="text/javascript">
+		var merchId = store.get('merchId');
+		var payMerchId = store.get('merchId');
+
+		/*显示图片*/
+		var imgSrc = '';
+		var imgUrl = '';
+		var carTypeCode = '';
+		var cardNo = '';
+		var storePhoto = '';
+		var storePhotoName = '';
+
+		/**
+		 * 读取缓存数据
+		 **/
+		function loadStoreData() {
+			// 结算卡类型
+			if (store.get('settleAccountType')) {
+				console.log(store.get('settleAccountType'));
+				switch (store.get('settleAccountType')) {
+					case '2':
+						$('#settleAccountType').val('法人账户');
+						break;
+					case '1':
+						$('#settleAccountType').val('对公账户');
+						break;
+					default:
+						break;
+				}
+				
+			}
+			// 结算卡
+			if (store.get('settleAccountNo')) {
+				console.log(store.get('settleAccountNo'));
+				$('#settleAccountNo').val(store.get('settleAccountNo'));
+			}
+			//开户行 
+			if (store.get('openSubBank')) {
+				$('#openSubBank').val(store.get('openSubBank'));
+			}
+			//银行卡正面照
+			if (store.get('cardFront')) {
+				console.log(store.get('cardFront'));
+				// $('#cardFront').val(store.get('cardFront'));
+				$('.box-bg.cardFront .box-camera').css({
+					'background': 'url(' + (store.get('cardFront')) + ') no-repeat center center',
+					'background-size': 'inherit',
+				});
+				$('.box-bg.cardFront .box-camera .img-camera img').css('display', 'none');
+			}
+			//商户收单协议照
+			if (store.get('acquiringAgreementPhoto')) {
+				console.log(store.get('acquiringAgreementPhoto'));
+				// $('#acquiringAgreementPhoto').val(store.get('acquiringAgreementPhoto'));
+				$('.box-bg.acquiringAgreementPhoto .box-camera').css({
+					'background': 'url(' + (store.get('acquiringAgreementPhoto')) + ') no-repeat center center',
+					'background-size': 'inherit',
+				});
+				$('.box-bg.acquiringAgreementPhoto .box-camera .img-camera img').css('display', 'none');
+			}
+			//开户许可证照片
+			if (store.get('openingLicenseAccountPhoto')) {
+				console.log(store.get('openingLicenseAccountPhoto'));
+				// $('#openingLicenseAccountPhoto').val(store.get('openingLicenseAccountPhoto'));
+				$('.box-bg.openingLicenseAccountPhoto .box-camera').css({
+					'background': 'url(' + (store.get('openingLicenseAccountPhoto')) + ') no-repeat center center',
+					'background-size': 'inherit',
+				});
+				$('.box-bg.openingLicenseAccountPhoto .box-camera .img-camera img').css('display', 'none');
+			}
+			//结算周期
+			if (store.get('setCycle')) {
+				$('#setCycle').val(store.get('setCycle'));
+			}
+		}
+
+		function displayImg(path) {
+			console.log("显示图片");
+			imgSrc = 'file://' + path;
+		}
+
+		function selectImg(inputId) {
+			$('.box-bg.' + inputId).on('click', function (e) {
+				$('#' + inputId).trigger('click');
+
+				return false;
+			});
+
+			$('#' + inputId).change(function () {
+				if($(this).prop('files')[0] == 'undefined'){
+					return;
+				}else{
+					var _this = $(this);
+					$(this).parent('.file-input-box').addClass('loading');
+					var form_data = new FormData();
+					var file_data = $(this).prop("files")[0];
+					switch ($(this).attr('name')) {
+						case 'cardFront':
+							form_data.append('file', file_data);
+							form_data.append('fileType', '12');
+							form_data.append('merchId', payMerchId);
+							storePhoto = 'cardFront';
+							storePhotoName = '银行卡正面照片';
+							break;
+						case 'acquiringAgreementPhoto':
+							form_data.append('file', file_data);
+							form_data.append('fileType', '09');
+							form_data.append('merchId', payMerchId);
+							storePhoto = 'acquiringAgreementPhoto';
+							storePhotoName = '商户收单协议照片';
+							break;
+						case 'openingLicenseAccountPhoto':
+							form_data.append('file', file_data);
+							form_data.append('fileType', '11');
+							form_data.append('merchId', payMerchId);
+							storePhoto = 'openingLicenseAccountPhoto';
+							storePhotoName = '开户许可证照片';
+							break;
+						default:
+							break;
+					}
+					$.ajax({
+						type: "POST",
+						url: urlPath + "scanpay/uploadMerchPhotoInfo.do",
+						dataType: "json",
+						processData: false,  // 注意：让jQuery不要处理数据
+						contentType: false,  // 注意：让jQuery不要设置contentType
+						data: form_data,
+						success: function (data) {
+							console.log(data.data);
+
+							if (data.code == 200 && data.data) {
+								imgUrl = data.data.path;
+								store.set(storePhoto, data.data.path);
+								$('.box-bg.' + inputId + ' .box-camera').css({
+									'background': 'url(' + (imgSrc != '' ? imgSrc : imgUrl) + ') no-repeat center center',
+									'background-size': 'inherit',
+								});
+								$('.box-bg.' + inputId + ' .box-camera .img-camera img').css('display', 'none');
+								if (_this.parent('.file-input-box').hasClass('error')) {
+									_this.parent('.file-input-box').removeClass('error').addClass('sucess');
+								}
+								_this.parent('.file-input-box').removeClass('loading');
+								$('#' + inputId + '-info').css('display', 'none').text('');
+							} else if (data.code == 400 && data.message) {
+								_this.parent('.file-input-box').removeClass('loading');
+								mui.alert(storePhotoName + data.message);
+							} else {
+								_this.parent('.file-input-box').removeClass('loading');
+								mui.alert(storePhotoName + '上传失败');
+								_this.val('');
+							}
+						},
+						error: function () {
+							_this.parent('.file-input-box').removeClass('loading');
+							mui.alert(storePhotoName + '上传失败');
+							_this.val('');
+						}
+					});
+				}
+				
+				return false;
+			});
+		}
+
+		/**
+		 *  结算银行卡查询
+		 **/
+		function loadSetCar() {
+			$.ajax({
+				type: "get",
+				url: urlPath + "scanpay/querySettleCardInfo.do",
+				data: { merchId: payMerchId, Code: carTypeCode, version: version },
+				dataType: "json",
+				success: function (response) {
+					console.log(response);
+					if(response.code == 200 && response.data){
+						cardNo = Object.keys(response.data)[0];
+						store.set('openBankCode', cardNo);
+						store.set('settleAccountNo', Object.keys(response.data)[0]);
+						$('#setCar').val(cardNo.slice(0, 4) + '****' + cardNo.slice(-4));
+						if($('#setCar').parent('.mui-input-row').hasClass('error')){
+							$('#setCar').parent('.mui-input-row').removeClass('error').addClass('sucess');
+							$('#setCar-info').css('display', 'none').text('');
+						}
+						if($('#setCycle').parent('.mui-input-row').hasClass('error')){
+							$('#setCycle').parent('.mui-input-row').removeClass('error').addClass('sucess');
+							$('#setCycle-info').css('display', 'none').text('');
+						}
+						loadAccOpenName();
+					}else{
+						mui.alert(response.message);
+					}
+				}
+			});
+		}
+
+		/**
+		*  开户支行查询
+		**/
+		function loadAccOpenName() {
+			console.log(cardNo);
+			
+			$.ajax({
+				type: "get",
+				url: urlPath + "scanpay/queryUnionBankNo.do",
+				data: { cardNo: cardNo, version: version },
+				dataType: "json",
+				success: function (response) {
+					if(response.data){
+						console.log(response.data);
+						store.set('openBankCode', response.data.openBankCode);
+						store.set('openBank', response.data.openBank);
+						store.set('openSubBank', response.data.openSubBank);
+						$('#accOpenName').val(response.data.openSubBank);
+						if ($('#accOpenName').parent('.mui-input-row').hasClass('error')) {
+							$('#accOpenName').parent('.mui-input-row').removeClass('error').addClass('sucess');
+							$('#accOpenName-info').css('display', 'none').text('');
+						}
+						if ($('#setCycle').parent('.mui-input-row').hasClass('error')) {
+							$('#setCycle').parent('.mui-input-row').removeClass('error').addClass('sucess');
+							$('#setCycle-info').css('display', 'none').text('');
+						}
+					}else{
+						mui.alert(response.message);
+					}
+				}
+			});
+		}
+		
+		(function (mui, doc) {
+				mui.init();
+				mui.ready(function () {
+					loadStoreData();
+					selectImg('cardFront');
+					selectImg('acquiringAgreementPhoto');
+					selectImg('openingLicenseAccountPhoto');
+					var setTypePicker = new mui.PopPicker();
+					var setType = store.get('dataEnum').SettleCardTypeEnum; //结束卡类型
+					setTypePicker.setData(setType);
+					$('#settleAccountType').on({
+						tap: function () {
+							setTypePicker.show(function (items) {
+								console.log(items[0].value + items[0].text);
+								$('#settleAccountType').val(items[0].text).change();
+								carTypeCode = items[0].value;
+								if ($('#settleAccountType').parent('.mui-input-row').hasClass('error')) {
+									$('#settleAccountType-info').text('');
+									$('#settleAccountType').parent('.mui-input-row').removeClass('error').addClass('sucess');
+								}
+								if(items[0].text == '法人账户'){
+									$('.column-line.cardFront').css('display', 'block');
+									$('.column-line.openingLicenseAccountPhoto').css('display', 'none');
+									$('#setCar').attr('readonly','readonly').attr('placeholder', '请选择结算卡');
+									$('#setCar').siblings('label').text('结算卡选择');
+									$('#setCycle').val('T+1（下个工作日结算）');
+									loadSetCar();
+								}else if(items[0].text == '对公账户'){
+									$('.column-line.openingLicenseAccountPhoto').css('display', 'block');
+									$('.column-line.cardFront').css('display', 'none');
+									$('#setCar').removeAttr('readonly').attr('placeholder', '请输入结算卡');
+									$('#setCar').siblings('label').text('结算卡');
+									$('#setCar').val('');
+									$('#accOpenName').val('');
+									$('#setCycle').val('T+1（下个工作日结算）');
+								}
+								store.set('settleAccountType', items[0].value);
+							});
+						},
+						change: function () {
+							
+						}
+					});
+
+					/**
+					 *	输入完结算卡后，失去焦点时查询开户行
+					 **/
+					$('#setCar').on('blur', function(){
+						if($('#setCar').val()){
+							cardNo = $('#setCar').val();
+							loadAccOpenName();
+						}
+					})
+
+					/**
+					 * 点击下一步序列化表单且验证表单
+					 **/
+					var isValidator = true;
+					$('#threeApplyBtn').on('tap', function(){
+						$('#setInfoForm input').each(function(i, e){
+							if(!$(e).val()){
+								switch($(this).attr('name')) {
+									case 'settleAccountType':
+										$('#settleAccountType-info').css('display', 'block').text('结算卡类型不能为空');
+										$(this).parent('.mui-input-row').removeClass('sucess').addClass('error');
+										break;
+									case 'setCar':
+										$('#setCar-info').css('display', 'block').text('结算卡不能为空');
+										$(this).parent('.mui-input-row').removeClass('sucess').addClass('error');
+										break;
+									case 'accOpenName':
+										$('#accOpenName-info').css('display', 'block').text('开户支行不能为空');
+										$(this).parent('.mui-input-row').removeClass('sucess').addClass('error');
+										break;
+									case 'cardFront':
+										if(!store.get('cardFront')){
+											$('#cardFront-info').css('display', 'block').text('银行卡正面照片不能为空');
+											$(this).parent('.file-input-box').removeClass('sucess').addClass('error');
+										}
+										break;
+									case 'acquiringAgreementPhoto':
+										if(!store.get('acquiringAgreementPhoto')){
+											$('#acquiringAgreementPhoto-info').css('display', 'block').text('商户收单协议照片不能为空');
+											$(this).parent('.file-input-box').removeClass('sucess').addClass('error');
+										}
+										break;
+									case 'openingLicenseAccountPhoto':
+										if(!store.get('openingLicenseAccountPhoto')){
+											$('#openingLicenseAccountPhoto-info').css('display', 'block').text('开户许可证照片不能为空');
+											$(this).parent('.file-input-box').removeClass('sucess').addClass('error');
+										}
+										break;
+									case 'setCycle':
+										$('#setCycle-info').css('display', 'block').text('结算周期不能为空');
+										$(this).parent('.mui-input-row').removeClass('sucess').addClass('error');
+										break;
+								}
+								isValidator = false;
+							}else{
+								isValidator = true;
+							}
+						});
+
+						if (isValidator) {
+							submitMerchants();
+						}
+
+						return false;
+					});
+
+					/**
+					 * 提交申请入驻
+					 **/
+					function submitMerchants() {
+						$('#threeApplyBtn').addClass('loading');
+						$.ajax({
+							type: "post",
+							url: urlPath + "scanpay/appMerchRegister.do",
+							data: { 
+								merchId: payMerchId, 
+								businessLicenseName: store.get('businessLicenseName'), 			// 商店名称
+								merchantType: store.get('merchantType'),               			// 店铺类型
+								province: store.get('province'),                       			// 省
+								city: store.get('city'),                               			// 市
+								area: store.get('area'),                               			// 区
+								businessAddress: store.get('businessAddress'),         			// 店铺详细地址
+								industryCategoryId: store.get('industryCategoryId'),   			// 行业类目子类
+								serviceTel: store.get('serviceTel'),                   			// 联系电话
+								email: store.get('email'),                             			// 邮箱
+								businessLicenseCode: store.get('businessLicenseCode'), 			// 营业执照号
+								businessLicenseExpired: store.get('businessLicenseExpired'),    // 营业执照有效期
+								businessLicensePhoto: store.get('businessLicensePhoto'),    	// 营业执照
+								storeHeadPhoto: store.get('storeHeadPhoto'),					// 门店门头照
+								storeHallPhoto: store.get('storeHallPhoto'),					// 内景照片
+								storeShopPhoto: store.get('storeShopPhoto'),					// 外景照片
+								storeCashierPhoto: store.get('storeCashierPhoto'),				// 收银台照片
+								settleAccountType: store.get('settleAccountType'),				// 结算卡类型
+								openBankCode: store.get('openBankCode'),						// 结算卡
+								settleAccountNo: store.get('settleAccountNo'),					// 结算卡号
+								openSubBank: store.get('openSubBank'),							// 支行名称
+								openBank: store.get('openBank'),								// 开户行
+								acquiringAgreementPhoto: store.get('acquiringAgreementPhoto'),  // 商户收单协议照
+								openingLicenseAccountPhoto: store.get('openingLicenseAccountPhoto'),  // 开户许可证
+								settlePeriod: '1'                                               // 结算周期
+							},
+							dataType: "json",
+							success: function (response) {
+								console.log(response);
+								if (response.code == 200 && response.data) {
+									$('#threeApplyBtn').removeClass('loading');
+									window.location.href = './auditing.html?merchId=' + merchId;
+								}else if(response.code == 400 && response.data == null){
+									$('#threeApplyBtn').removeClass('loading');
+									mui.alert(response.message);
+								}else{
+									$('#threeApplyBtn').removeClass('loading');
+									mui.alert('提交失败');
+								}
+							},
+							error: function (e) {
+									$('#threeApplyBtn').removeClass('loading');
+									mui.alert('提交失败');
+							}
+						});
+					}
+
+					/**
+					 * 表单验证
+					 **/
+					$('input').on('input', function () {
+						console.log($(this).val());
+						console.log($(this).attr('name'));
+
+					});
+				});
+			})(mui, document);
+		
+	</script>
+</html>

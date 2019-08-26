@@ -1,0 +1,266 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>聚合收款</title>
+	<link rel="stylesheet" type="text/css" href="../lib/mui-master/dist/css/mui.css" />
+	<link rel="stylesheet" type="text/css" href="../css/common.css" />
+	<link href="../lib/mui-master/examples/hello-mui/css/mui.picker.css" rel="stylesheet" />
+	<link href="../lib/mui-master/examples/hello-mui/css/mui.poppicker.css" rel="stylesheet" />
+	<link rel="stylesheet" href="../css/main.css">
+	<style>
+		.qr-code-box {
+			display: flex;
+			flex-direction: column;
+			justify-content: center;
+			align-items: center;
+			margin-top: 12%;
+		}
+		.qr-code-box .rq-canvas-box {
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+		}
+		.qr-code-box .rq-code-title {
+			height: 60px;
+			line-height: 60px;
+			color: #4C4C4C;
+			font-size: 26px;
+		}
+		.qr-code-box .rq-code-num {
+			margin-bottom: 16px;
+			color: #4C4C4C;
+			font-size: 38px;
+			font-weight: bold;
+			display: none;
+		}
+		.qr-code-box .rq-code-img img {
+			width: 200px;
+			height: 200px;
+			margin: 20px 0;
+		}
+		.qr-code-box .qr-code-setting {
+			display: flex;
+			justify-content: space-between;
+			width: 200px;
+		}
+		.qr-code-box .qr-code-setting a {
+			color: #007aff;
+			font-size: 14px;
+		}
+		.qr-code-list {
+			margin-top: 20px;
+		}
+
+		.qr-code-list .mui-table-view {
+			background-color: #ffffff46;
+			font-size: 14px;
+		}
+	</style>
+</head>
+
+<body>
+	<div class="mui-content">
+		<div class="qr-code-box">
+			<div class="rq-canvas-box">
+				<div class="rq-code-title">扫一扫，向我付钱</div>
+				<div class="rq-code-num"></div>
+				<div id="qrCode" class="rq-code-img">
+					<!-- <img src="../img/payImg.png" alt=""> -->
+				</div>
+			</div>
+			<div class="qr-code-setting">
+				<div id="promptBtn"><a href="#">设置金额</a></div>
+				<div><a id="downloadImg" href="javascript:void(0);">保存收款码</a></div>
+			</div>
+		</div>
+		<div class="qr-code-list">
+			<ul class="mui-table-view">
+				<li class="mui-table-view-cell">
+					<a class="mui-navigate-right" href="./payList.html">
+						收款账本
+					</a>
+				</li>
+				<!-- <li class="mui-table-view-cell">
+					<a class="mui-navigate-right" href="./payChannel.html">
+						用户付款渠道设置
+					</a>
+				</li> -->
+				<!-- <li class="mui-table-view-cell">
+					<a class="mui-navigate-right" href="./settlement.html">
+						结算周期
+					</a>
+				</li> -->
+				<li class="mui-table-view-cell">
+					<a class="mui-navigate-right" href="./rateTable.html">
+						费率说明
+					</a>
+				</li>
+			</ul>
+		</div>
+	</div>
+
+</body>
+<script src="../js/jquery-3.2.1.js"></script>
+<script src="../lib/mui-master/dist/js/mui.js"></script>
+<script src="../lib/mui-master/js/mui.picker.js"></script>
+<script src="../lib/mui-master/js/mui.poppicker.js"></script>
+<script src="../js/jquery.qrcode.min.js"></script>
+<script src="../js/store.legacy.min.js"></script>
+<script src="../js/pathUrl.js"></script>
+<script src="../js/html2canvas.js"></script>
+<script type="text/javascript">
+	var merchId = store.get('merchId') ? store.get('merchId') : getQueryVariable('merchId');
+	var payMerchId = store.get('merchId') ? store.get('merchId') : getQueryVariable('merchId');
+	// var merchId = '15811813135';
+	var qrAmount = '';
+	var genQrUrl = '';
+	var qrUrl = '';
+	function exportCanvasAsPNG(canvas, fileName) {
+		var canvasElement = canvas;
+		var MIME_TYPE = "image/png";
+		var imgURL = canvasElement.toDataURL(MIME_TYPE);
+		var dlLink = document.createElement('a');
+		dlLink.download = fileName;
+		dlLink.href = imgURL;
+		dlLink.dataset.downloadurl = [MIME_TYPE, dlLink.download, dlLink.href].join(':');
+		document.body.appendChild(dlLink);
+		dlLink.click();
+		document.body.removeChild(dlLink);
+	}
+
+	/* Canvas Donwload */
+	function download(canvas, filename) {
+		/// create an "off-screen" anchor tag
+		var lnk = document.createElement('a'), e;
+
+		/// the key here is to set the download attribute of the a tag
+		lnk.download = filename;
+
+		/// convert canvas content to data-uri for link. When download
+		/// attribute is set the content pointed to by link will be
+		/// pushed as "download" in HTML5 capable browsers
+		lnk.href = canvas.toDataURL("image/png;base64");
+
+		/// create a "fake" click-event to trigger the download
+		if (document.createEvent) {
+			e = document.createEvent("MouseEvents");
+			e.initMouseEvent("click", true, true, window,
+				0, 0, 0, 0, 0, false, false, false,
+				false, 0, null);
+
+			lnk.dispatchEvent(e);
+		} else if (lnk.fireEvent) {
+			lnk.fireEvent("onclick");
+		}
+	}
+	function createQrImg(){
+		$.ajax({
+			type: "post",
+			url: urlPath + "scanpay/getAggregatePayQRUrl.do",  // 'http://192.168.0.5:9288/scanpay/getAggregatePayQRUrl.do',
+			data: { merchId: merchId, version: '1.2' },
+			dataType: "json",
+			success: function (response) {
+				if (response.code == 200) {
+					genQrUrl =	response.data + '&amount=' + qrAmount;
+					console.log(genQrUrl);
+					
+					$.ajax({
+						type: "get",
+						url: genQrUrl,
+						data: '',
+						dataType: "text",
+						success: function (data) {
+							if (data) {
+								qrUrl = data;
+								console.log(qrUrl);
+								
+								$('#qrCode').html('');
+								$('#qrCode').qrcode({ width: 200, height: 200, text:  qrUrl }); //${window.location.origin}/html/toQrPay.html 
+							}
+						}
+					});
+				}
+				
+			}
+		});
+		$('#qrCode').html('');
+		$('#qrCode').qrcode({ width: 200, height: 200, text:  qrUrl}); //${window.location.origin}/html/toQrPay.html  
+	}
+	(function (mui, doc) {
+		mui.init();
+		mui.ready(function () {
+			createQrImg();
+			$('#downloadImg').on('click', function(){
+				html2canvas(document.querySelector(".rq-canvas-box")).then(canvas => {
+					// document.body.appendChild(canvas);
+					// exportCanvasAsPNG(canvas, 'qrImg');
+					download(canvas, 'qrImg');
+				});
+				
+			});
+			document.getElementById("promptBtn").addEventListener('tap', function (e) {
+				e.detail.gesture.preventDefault(); //修复iOS 8.x平台存在的bug，使用plus.nativeUI.prompt会造成输入法闪一下又没了
+				var btnArray = ['取消', '确定'];
+				if($('#promptBtn a').text() == '清除金额') {
+					$('.rq-code-num').css('display', 'none').text('');
+					$('#promptBtn a').text('设置金额');
+					qrAmount = '';
+					store.remove('qrAmount');
+				}else{
+					mui.prompt('', '￥', '请输入金额', btnArray, function (e) {
+						if (e.index == 1 && e.value) {
+							$('.rq-code-num').css('display', 'block').text('￥' + e.value);
+							qrAmount = e.value;
+							store.set('qrAmount', qrAmount);
+							if ($('.rq-code-num').text != '') {
+								$('#promptBtn a').text('清除金额');
+							}
+							createQrImg();
+						} else {
+							console.log('你点了取消按钮');
+						}
+					});
+					$('.mui-popup-input input').attr('onkeyup', "value=value.replace(/[^\\d.]/g,'')");
+					$('.mui-popup-input input').attr('onafterpaste', "this.value=this.value.replace(/[^\\d.]/g,'')");
+				}
+			});
+			if(store.get('qrAmount')){
+				qrAmount = store.get('qrAmount');
+				$('.rq-code-num').css('display', 'block').text('￥' + qrAmount);
+				if ($('.rq-code-num').text != '') {
+					$('#promptBtn a').text('清除金额');
+				}
+				createQrImg();
+			}else if(!qrAmount){
+				mui.prompt('', '￥', '请设置收款金额', ['取消', '确定'], function (e) {
+					console.log($('.mui-popup-input input'));
+					console.log('aaaa');
+					
+					
+					if (e.index == 1 && e.value) {
+						$('.rq-code-num').css('display', 'block').text('￥' + e.value);
+						qrAmount = e.value;
+						store.set('qrAmount', qrAmount);
+						if ($('.rq-code-num').text != '') {
+							$('#promptBtn a').text('清除金额');
+						}
+						
+						createQrImg();
+					} else {
+						console.log('你点了取消按钮');
+					}
+				});
+			}
+			$('.mui-popup-input input').attr('onkeyup', "value=value.replace(/[^\\d.]/g,'')");
+			$('.mui-popup-input input').attr('onafterpaste', "this.value=this.value.replace(/[^\\d.]/g,'')");
+		});
+		
+	})(mui, document);
+
+</script>
+
+</html>

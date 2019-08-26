@@ -1,0 +1,201 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>聚合收款</title>
+	<link rel="stylesheet" type="text/css" href="../lib/mui-master/dist/css/mui.css" />
+	<link rel="stylesheet" type="text/css" href="../css/common.css" />
+	<link href="../lib/mui-master/examples/hello-mui/css/mui.picker.css" rel="stylesheet" />
+	<link href="../lib/mui-master/examples/hello-mui/css/mui.poppicker.css" rel="stylesheet" />
+	<link rel="stylesheet" href="../css/main.css">
+<style>
+	.list-box .date-box {
+		height: 36px;
+		line-height: 36px;
+		padding: 0 16px;
+	}
+
+	.list-box .img {
+		display: flex;
+	}
+
+	.content-box,
+	.total-box {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+	}
+
+	.list-box .img img {
+		width: 32px;
+		height: 32px;
+	}
+
+	.list-box .img-box {
+		display: flex;
+		align-items: center;
+	}
+
+	.list-box .img-box .info {
+		margin: 0 10px;
+	}
+
+	.list-box .img-box .info .dsc {
+		color: #c8c7cc;
+	}
+
+	.num-box {
+		font-size: 18px;
+		margin-right: 10px;
+	}
+
+	.total-box {
+		font-size: 14px;
+	}
+
+	.total-box .pay-num .num {
+		font-weight: bold;
+	}
+
+	.total-box .total-num .num {
+		font-weight: bold;
+	}
+
+	.list-box {
+		display: none;
+	}
+
+	.des-info {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		flex-direction: column;
+		margin-top: 50%;
+		font-size: 16px;
+		color: #929292;
+	}
+
+	.des-info img {
+		transform: scale(.7);
+	}
+</style>
+</head>
+
+<body>
+	<div class="mui-content">
+		<div class="list-box">
+			<ul class="mui-table-view list-ul">
+
+			</ul>
+		</div>
+		<div class="des-info">
+			<div class="des-img"><img src="../img/wushuju.png" alt=""></div>
+			<div class="des-text">暂 无 数 据</div>
+		</div>
+	</div>
+
+</body>
+<script src="../js/jquery-3.2.1.js"></script>
+<script src="../lib/mui-master/dist/js/mui.js"></script>
+<script src="../lib/mui-master/js/mui.picker.js"></script>
+<script src="../lib/mui-master/js/mui.poppicker.js"></script>
+<script src="../js/moment.min.js"></script>
+<script src="../js/locale/zh-cn.js"></script>
+<script src="../js/store.legacy.min.js"></script>
+<script src="../js/pathUrl.js"></script>
+<script type="text/javascript">
+	var merchId = store.get('merchId');
+	var payMerchId = store.get('merchId');
+	(function (mui, doc) {
+		mui.init();
+		mui.ready(function () {
+			var itemList = '';
+			var dataList = [];
+			var totalNum = 0;
+			moment.locale('zh-cn');
+
+			function getPayType(code) {
+				switch (code) {
+					case '12':
+						return '../img/yunPay.png'
+						break;
+					case '13':
+						return '../img/aliPay.png'
+						break;
+					case '14':
+						return '../img/weChat.png'
+						break;
+					default:
+						break;
+				}
+				return '';
+			}
+
+			$.ajax({
+				type: "get",
+				url: payPath + "queryWithdrawList.do",
+				data: { merchId: merchId, TradeType: 'SETTLE' },
+				dataType: "json",
+				success: function (response) {
+					console.log(response);
+					
+					$.each(response.data.list, function (i, d) {
+						itemList += `
+							<li class="mui-table-view-cell">
+								<div class="content-box">
+									<div class="img-box">
+										<div class="img"><img src="../img/tixian.png" alt=""></div>
+										<div class="info">
+											<div class="text">${d.statusDesc}</div>
+											<div class="dsc">${d.insertTime.slice(0, -2)}</div>
+										</div>
+									</div>
+									<div class="num-box">
+										￥ ${d.amount}
+									</div>
+								</div>
+							</li>
+						`;
+
+					});
+					$('.list-box .list-ul').append(itemList);
+					$('.des-info').css('display', 'none');
+					$('.list-box').css('display', 'block');
+				}
+			});
+
+
+			// $.ajax({
+			// 	type: "get",
+			// 	url: "../data/payList.json",
+			// 	data: { merchId: '18826426220', page: '1', pageSize: '3' },
+			// 	dataType: "json",
+			// 	success: function (response) {
+
+			// 		console.log(response.list);
+
+			// 		for (let i = 0; i < response.list.length; i++) {
+			// 			dataList = response.list[i].dataList;
+			// 			itemList += `<div class="date-box">${moment(response.list[i].totalDate).format('LL')}</div><ul class="mui-table-view"><li class="mui-table-view-cell"><div class="total-box"><div class="pay-num">收款笔数 <span class="num">${ dataList.length }</span></div><div class="total-num">合计 ${ '' }<span class="num"></span></div></div></li>`;
+			// 			for (let j = 0; j < dataList.length; j++) {
+			// 				console.log(dataList[j]);
+			// 				totalNum += dataList[j].transAmt;
+			// 				itemList += `<li class="mui-table-view-cell"><div class="content-box"><div class="img-box"><div class="img"><img src="${getPayType(dataList[j].businessCode)}" alt=""></div><div class="info"><div class="text">支付宝收款成功</div><div class="dsc">${dataList[j].settDate}</div></div></div><div class="num-box">￥ ${dataList[j].transAmt}</div></div></li>`;
+			// 			}
+			// 			itemList += `</ul>`;
+			// 		}
+
+			// 		console.log(itemList);
+
+
+			// 		$('.list-box').append(itemList);
+
+			// 	}
+			// });
+		});
+	})(mui, document);
+
+</script>
+</html>

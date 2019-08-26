@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name='HandheldFriendly' content="True" />
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+    <title>聚合收款</title>
+
+    <style>
+    
+    </style>
+</head>
+
+<body>
+   
+</body>
+<script src="../js/jquery-3.2.1.js"></script>
+<script src="../js/store.legacy.min.js"></script>
+<script src="../js/pathUrl.js"></script>
+<script type="text/javascript">
+    /**
+    * 缓存店铺类型数据及初始化下拉列表
+    **/
+//    window.location.href = './toApplyOne.html';
+    store.set('merchId', getQueryVariable('merchId'));
+    // store.set('merchId', '15811813135');
+    
+    $(function () {
+        // console.log('merchId', merchId);
+        // console.log('payMerchId', payMerchId);
+        // mui.alert(payMerchId);
+        
+        $.ajax({
+            type: "post",
+            url: urlPath + "scanpay/queryMerchIsJoin.do",
+            data: { merchId: store.get('merchId'), version: '1.2' }, //18826426220  //18664513017
+            // data: { merchId: merchId, version: '1.2' },
+            dataType: "json",
+            success: function (response) {
+                console.log(response.data);
+                if (response.code == '200') {
+                    if (response.data.state == 1) {
+                        window.location.href = './auditing.html?merchId=' + getQueryVariable('merchId'); 
+                    } else if (response.data.state == 2) {
+                        window.location.href = './toPay.html?merchId=' + getQueryVariable('merchId');
+                    } else if (response.data.state == 0) {
+                        window.location.href = './inPayInfo.html?merchId=' + getQueryVariable('merchId');
+                    } else if (response.data.state == 3) {
+                        console.log(response);
+
+                        // window.location.href = './auditFailure.html?desc=' + response.data.desc;
+                    }
+                } else {
+                    console.log('数据加载错误...');
+
+                }
+            }
+        });
+    });
+
+    function getQueryVariable(variable) {
+            var query = decodeURI(window.location.search.substring(1));
+            var vars = query.split("&");
+            for (var i = 0; i < vars.length; i++) {
+                var pair = vars[i].split("=");
+                if (pair[0] == variable) { return pair[1]; }
+            }
+            return ('');
+        }
+
+</script>
+
+</html>

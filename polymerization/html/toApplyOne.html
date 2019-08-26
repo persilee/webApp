@@ -1,0 +1,650 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<meta name='HandheldFriendly' content="True" />
+	<meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' />
+	<title>聚合收款</title>
+	<link rel="stylesheet" type="text/css" href="../lib/mui-master/dist/css/mui.css" />
+	<link rel="stylesheet" type="text/css" href="../css/common.css" />
+	<link href="../lib/mui-master/examples/hello-mui/css/mui.picker.css" rel="stylesheet" />
+	<link href="../lib/mui-master/examples/hello-mui/css/mui.poppicker.css" rel="stylesheet" />
+	<link rel="stylesheet" href="../css/main.css">
+	<style>
+		.mui-content .container .steps .step-one {
+			background-color: #ff0000;
+    		color: #fff;
+		}
+		.mui-content .container .from-box .dsc img {
+			width: 14px;
+			height: 14px;
+			position: relative;
+			top: 2px;
+			margin-right: 2px;
+		}
+		.mui-content .container .from-box .two-row-box .mui-input-row label {
+			letter-spacing: 3px;
+		}
+		.mui-content .container .from-box .two-row-box .one-box{
+			flex: 3;
+		}
+		.mui-content .container .from-box .two-row-box .two-box{
+			flex: 2;
+		}
+
+		.mui-content .container .from-box .mui-input-group .two-row-box .mui-input-row {
+			margin: 0 4px 0 0;
+		}
+
+		.mui-input-row.one-box label ~ input {
+			width: 55%;
+		}
+		.mui-input-row.one-box label {
+			width: 45%;
+		}
+		.mui-input-row.two-box label ~ input {
+			width: 100%;
+		}
+	</style>
+</head>
+
+<body>
+	<div class="mui-content">
+		<div class="tips">
+			<div class="tip-info">不会填写？<span class="tip-link">联系客服</span>线下申请</div>
+		</div>
+		<div class="container">
+			<div class="title">商户收款，申请入驻</div>
+			<div class="describe">法人/经营者姓名必须同本账户姓名一致</div>
+			<div class="steps">
+				<div class="step-line">
+				</div>
+				<div class="step-one">
+					1
+				</div>
+				<div class="text-one">店铺信息</div>
+
+				<div class="step-two">
+					2
+				</div>
+				<div class="text-two">营业执照上传</div>
+				<div class="step-three">
+					3
+				</div>
+				<div class="text-three">设置结算卡</div>
+			</div>
+			<div class="from-box">
+				<form id="storeInfoForm" class="mui-input-group">
+					<div class="mui-input-row">
+						<label for="businessLicenseName">店铺名称</label>
+						<input id="businessLicenseName" name="businessLicenseName" type="text" class="mui-input-clear" placeholder="请输入店铺名称">
+					</div>
+					<div id="businessLicenseName-info" class="validation-box"></div>
+					<div class="dsc"><img src="../img/tip.png" alt="">店铺名称需与营业执照一致</div>
+					<div class="mui-input-row">
+						<label>店铺类型</label>
+						<input id='merchantType' name="merchantType" type="text" class="" placeholder="请选择店铺类型" readonly="readonly"></input>
+					</div>
+					<div id="merchantType-info" class="validation-box"></div>
+					<div class="three-row-box">
+						<div class="mui-input-row">
+							<label>省</label>
+							<input id='province' name="province" type="text" class="" placeholder="请选择省" readonly="readonly"></input>
+						</div>
+						<div class="mui-input-row">
+							<label>市</label>
+							<input id='city' name="city" type="text" class="" placeholder="请选择市" readonly="readonly"></input>
+						</div>
+						<div class="mui-input-row">
+							<label>区</label>
+							<input id='area' name="area" type="text" class="" placeholder="请选择区" readonly="readonly"></input>
+						</div>
+					</div>
+					<div id="area-info" class="validation-box"></div>
+					<div class="mui-input-row">
+						<label>详细地址</label>
+						<input id="businessAddress" name="businessAddress" type="text" class="mui-input-clear" placeholder="请输入详细地址">
+					</div>
+					<div id="businessAddress-info" class="validation-box"></div>
+					<div class="dsc"><img src="../img/tip.png" alt="">详细地址需与营业执照地址一致</div>
+					<div class="two-row-box">
+						<div class="mui-input-row one-box">
+							<label>行业类目</label>
+							<input id="mccType" name="mccType" type="text" class="mui-input-clear" placeholder="请选择所在行业" readonly="readonly">
+						</div>
+						<div class="mui-input-row two-box">
+							<label></label>
+							<input id="mccItem" name="mccItem" type="text" class="mui-input-clear" placeholder="请选择服务类型" readonly="readonly">
+						</div>
+					</div>
+					<div id="mcc-info" class="validation-box"></div>
+					<div class="mui-input-row">
+						<label>客服电话</label>
+						<input id="serviceTel" name="serviceTel" type="text" class="mui-input-clear" placeholder="请输入客服电话">
+					</div>
+					<div id="serviceTel-info" class="validation-box"></div>
+					<div class="mui-input-row">
+						<label>邮箱地址</label>
+						<input id="email" name="email" type="text" class="mui-input-clear" placeholder="请输入邮箱地址">
+					</div>
+					<div id="email-info" class="validation-box"></div>
+					<a id="oneApplyBtn" class="mui-btn mui-btn-block btn-default" href="javascript:void(0);">下 一 步</a>
+				</form>
+			</div>
+		</div>
+	</div>
+
+</body>
+<script src="../js/jquery-3.2.1.js"></script>
+<script src="../lib/mui-master/dist/js/mui.js"></script>
+<script src="../lib/mui-master/examples/hello-mui/js/mui.picker.min.js"></script>
+<script src="../js/store.legacy.min.js"></script>
+<script src="../js/validator.min.js"></script>
+<script src="../js/store.legacy.min.js"></script>
+<script src="../js/pathUrl.js"></script>
+<script type="text/javascript">
+		
+		var merchId = store.get('merchId');
+		var payMerchId = store.get('merchId');
+
+		/**
+		 * 读取缓存数据
+		 **/
+		function loadStoreData() {
+			// 商店名称
+			if (store.get('businessLicenseName')) {
+				$('#businessLicenseName').val(store.get('businessLicenseName'));
+			}
+			// 店铺类型
+			if (store.get('merchantType')) {
+				console.log(store.get('businessLicenseCode'));
+				switch (store.get('merchantType')) {
+					case '1':
+						$('#merchantType').val('个体商户');
+						break;
+					case '2':
+						$('#merchantType').val('企业');
+						break;
+					case '3':
+						$('#merchantType').val('个人');
+						break;
+					default:
+						break;
+				}
+			}
+			//店铺详细地址 
+			if (store.get('businessAddress')) {
+				$('#businessAddress').val(store.get('businessAddress'));
+			}
+			//联系电话
+			if (store.get('serviceTel')) {
+				$('#serviceTel').val(store.get('serviceTel'));
+			}
+			//邮箱
+			if (store.get('email')) {
+				$('#email').val(store.get('email'));
+			}
+		}
+
+	(function (mui, doc) {
+		var provinceCode = '';
+		var cityCode = '';
+		var areaCode = '';
+		var mccCode = '';
+		mui.init();
+		mui.ready(function () {
+			loadStoreData();
+			/**
+			* 缓存店铺类型数据及初始化下拉列表
+			**/
+			$.ajax({
+				type: "get",
+				url: urlPath + "enum/list.do",
+				data: "",
+				async: false,
+				dataType: "json",
+				success: function (response) {
+					store.set('dataEnum', response);
+				}
+			});
+			var merchantTypePicker = new mui.PopPicker();
+			var merchantType = store.get('dataEnum').MerchantTypeEnum; // 店铺类型
+			merchantTypePicker.setData(merchantType);
+			var merchantTypeButton = doc.getElementById('merchantType');
+			$('#merchantType').on({
+				tap: function () {
+					merchantTypePicker.show(function (items) {
+						console.log(items[0].text);
+						$('#merchantType').val(items[0].text);
+						if ($('#merchantType').parent('.mui-input-row').hasClass('error')) {
+							$('#merchantType-info').css('display', 'none').text('');
+							$('#merchantType').parent('.mui-input-row').removeClass('error').addClass('sucess');
+						}
+						store.set('merchantType', items[0].value);
+					});
+				}
+			});
+			/**
+			 * 缓存省数据
+			 * 初始化下拉列表
+			 **/
+
+			 console.log('bbb',payMerchId);
+			 
+			$.ajax({
+				type: "post",
+				url: urlPath + "scanpay/queryRegionListByNick.do",
+				data: { merchId: payMerchId, platform: '1', code: '0000'},
+				dataType: "json",
+				async: false,
+				success: function (response) {
+					console.log(response);
+					
+					store.set('provinceData', response.data);
+				}
+			});
+			var provincePicker = new mui.PopPicker();
+			provincePicker.setData(store.get('provinceData'));
+			$('#province').on({
+				tap: function () {
+					provincePicker.show(function (items) {
+						$('#province').val(items[0].text).change();
+						provinceCode = items[0].value;
+						if ($('#province').parent('.mui-input-row').hasClass('error')) {
+							$('#area-info').text('市、区不能为空');
+							$('#province').parent('.mui-input-row').removeClass('error').addClass('sucess');
+						}
+						store.set('province', items[0].value);
+						loadCity();
+					});
+				},
+				change: function () {
+					$('#area').val('');
+					$('#city').val('');
+				}
+			});
+			/**
+			 * 缓存市数据
+			 * 初始化下拉列表
+			 **/
+			var cityPicker;
+			 function loadCity() {
+				$.ajax({
+					 type: "post",
+					 url: urlPath + "scanpay/queryRegionListByNick.do",
+					 data: { merchId: payMerchId, platform: '2', code: provinceCode },
+					 dataType: "json",
+					 async: false,
+					 success: function (response) {
+						 console.log(response);
+						 
+						 if(store.get('cityData')){
+							store.remove('cityData');
+							store.set('cityData', response.data);
+							cityPicker = new mui.PopPicker();
+							cityPicker.setData(store.get('cityData'));
+						 }else{
+							store.set('cityData', response.data);
+							cityPicker = new mui.PopPicker();
+							cityPicker.setData(store.get('cityData'));
+						 }
+					 }
+				 });
+			 } 
+			$('#city').on({
+				tap: function(){
+					if (provinceCode != '') {
+						cityPicker.show(function (items) {
+							$('#city').val(items[0].text).change();
+							cityCode = items[0].value;
+							console.log(items[0].text, cityCode);
+							if ($('#city').parent('.mui-input-row').hasClass('error')) {
+								$('#area-info').text('区不能为空');
+								$('#city').parent('.mui-input-row').removeClass('error').addClass('sucess');
+							}
+							loadArea();
+							store.set('city', items[0].value);
+						});
+					} else {
+						mui.toast('请先选择省');
+					}
+				},
+				change: function(){
+					$('#area').val('');
+				}
+			});
+
+			/**
+			 * 缓存区数据
+			 * 初始化下拉列表
+			 **/
+			var areaPicker;
+			function loadArea() {
+				 $.ajax({
+					type: "post",
+					url: urlPath + "scanpay/queryRegionListByNick.do",
+					data: { merchId: payMerchId, platform: '3', code: cityCode },
+					dataType: "json",
+					async: false,
+					success: function (response) {
+						if (store.get('areaData')) {
+							store.remove('areaData');
+							store.set('areaData', response.data);
+							areaPicker = new mui.PopPicker();
+							areaPicker.setData(store.get('areaData'));
+						} else {
+							store.set('areaData', response.data);
+							areaPicker = new mui.PopPicker();
+							areaPicker.setData(store.get('areaData'));
+						}
+					}
+				});
+			}
+			$('#area').on('tap', function (event) {
+				if (cityCode != '') {
+					areaPicker.show(function (items) {
+						$('#area').val(items[0].text);
+						console.log(items[0].text, items[0].value);
+						if ($('#area').parent('.mui-input-row').hasClass('error')) {
+							$('#area-info').text('').css('display', 'none');
+							$('#area').parent('.mui-input-row').removeClass('error').addClass('sucess');
+						}
+						store.set('area', items[0].value);
+					});
+				} else {
+					mui.toast('请先选择省和区');
+				}
+			});
+
+			/**
+			 *  缓存Mcc数据
+			 *  行业类目 Mcc
+			 **/
+			var mccTypePicker;
+			 $.ajax({
+				type: "post",
+				url: urlPath + "scanpay/queryMccTypeByNick.do",
+				data: { merchId: payMerchId },
+				dataType: "json",
+				success: function (response) {
+					store.set('mccType', response.data);
+					mccTypePicker = new mui.PopPicker();
+					mccTypePicker.setData(store.get('mccType'));
+				}
+			});
+			$('#mccType').on({
+				tap: function () {
+					mccTypePicker.show(function (items) {
+						$('#mccType').val(items[0].text).change();
+						mccCode = items[0].value;
+						console.log(`${mccCode} :  ${items[0].text}`);
+						
+						if ($('#mccType').parent('.mui-input-row').hasClass('error')) {
+							$('#mcc-info').text('').text('服务类型不能为空');
+							$('#mccType').parent('.mui-input-row').removeClass('error').addClass('sucess');
+						}
+						store.set('mccCode', items[0].value);
+						loadMccItem();
+					});
+				},
+				change: function () {
+					$('#mccItem').val('');
+				}
+			});
+
+			/**
+			 *  缓存子类数据
+			 *  行业类目子类 MccItem
+			 * */
+			var mccItemPicker;
+			function loadMccItem() {
+				$.ajax({
+					type: "post",
+					url: urlPath + "scanpay/queryMccItemsByNick.do",
+					data: { merchId: payMerchId, Code: mccCode },
+					dataType: "json",
+					success: function (response) {
+						store.set('mccItem', response.data);
+						mccItemPicker = new mui.PopPicker();
+						mccItemPicker.setData(store.get('mccItem'));
+					}
+				});
+			}
+			$('#mccItem').on({
+				tap: function () {
+					if (mccCode != '') {
+						mccItemPicker.show(function (items) {
+							$('#mccItem').val(items[0].text);
+							if ($('#mccItem').parent('.mui-input-row').hasClass('error')) {
+								$('#mcc-info').text('').text('').css('display', 'none');
+								$('#mccItem').parent('.mui-input-row').removeClass('error').addClass('sucess');
+							}
+							store.set('industryCategoryId', items[0].value);
+						});
+					} else {
+						mui.toast('请先选择所在行业');
+					}
+				}
+			});
+		});
+
+		/**
+		 * 点击下一步序列化表单 
+		 **/
+		function isEmailValidator(value){
+			if (validator.isEmail(value)) {
+				emailValidator = true;
+			}
+		}
+		function isPhoneValidator(value){
+			if (/^(([0\+]\d{2,3}-)?(0\d{2,3})-)?(\d{7,8})(-(\d{3,}))?$/.test(value) || /^(1([3456789][0-9]))\d{8}$/.test(value)) {
+				phoneValidator = true;
+			} else {
+				phoneValidator = false;
+			}
+		}
+		var areaInt = 0;
+		var isValidator = true;
+		var isValidatorNum = 0;
+		var emailValidator = false;
+		var phoneValidator = false;
+		$('#oneApplyBtn').on('tap', function(){
+			isValidatorNum = 0;
+			$("#storeInfoForm input").each(function (i, e) { 
+
+				console.log($(e).val());
+				
+				if (!$(e).val()) {
+					switch ($(this).attr('name')) {
+						case 'businessLicenseName':
+							$('#businessLicenseName-info').css('display', 'block').text('店铺名称不能为空');
+							$(this).parent('.mui-input-row').removeClass('sucess').addClass('error');
+							isValidator = false;
+							break;
+						case 'merchantType':
+							$('#merchantType-info').css('display', 'block').text('店铺类型不能为空');
+							$(this).parent('.mui-input-row').removeClass('sucess').addClass('error');
+							isValidator = false;
+							break;
+						case 'province':
+							$('#area-info').css('display', 'block').text('省不能为空');
+							$(this).parent('.mui-input-row').removeClass('sucess').addClass('error');
+							areaInt += 1;
+							isValidator = false;
+							break;
+						case 'city':
+							$('#area-info').css('display', 'block').text('市、区不能为空');
+							$(this).parent('.mui-input-row').removeClass('sucess').addClass('error');
+							areaInt += 1;
+							isValidator = false;
+							break;
+						case 'area':
+							areaInt += 1;
+							if(areaInt == 2){
+								$('#area-info').css('display', 'block').text('市、区不能为空');
+							}else if(areaInt == 3){
+								$('#area-info').css('display', 'block').text('省、市、区不能为空');
+							}
+							$(this).parent('.mui-input-row').removeClass('sucess').addClass('error');
+							isValidator = false;
+							break;
+						case 'businessAddress':
+							$('#businessAddress-info').css('display', 'block').text('详细地址不能为空');
+							$(this).parent('.mui-input-row').removeClass('sucess').addClass('error');
+							isValidator = false;
+							break;
+						case 'mccType':
+							$('#mcc-info').css('display', 'block').text('行业类目不能为空');
+							$(this).parent('.mui-input-row').removeClass('sucess').addClass('error');
+							isValidator = false;
+							break;
+						case 'mccItem':
+							$('#mcc-info').css('display', 'block').text('行业类目不能为空');
+							$(this).parent('.mui-input-row').removeClass('sucess').addClass('error');
+							isValidator = false;
+							break;
+						case 'serviceTel':
+							$('#serviceTel-info').css('display', 'block').text('客服电话不能为空');
+							$(this).parent('.mui-input-row').removeClass('sucess').addClass('error');
+							isValidator = false;
+							break;
+						case 'email':
+							$('#email-info').css('display', 'block').text('邮箱地址不能为空');
+							$(this).parent('.mui-input-row').removeClass('sucess').addClass('error');
+							isValidator = false;
+							break;
+						default:
+							break;
+					}
+					console.log('1',isValidator);
+					
+				}else{
+					isValidatorNum += 1;
+					isValidator = true;
+				}
+			 });
+
+			 isEmailValidator($('#email').val());
+			 isPhoneValidator($('#serviceTel').val());
+			 console.log('3', isValidator);
+			 if(isValidatorNum == 10 && isValidator && emailValidator && phoneValidator){
+				 console.log('2', isValidator);
+				 store.set('businessLicenseName', $('#businessLicenseName').val());
+				 store.set('businessAddress', $('#businessAddress').val());
+				 store.set('serviceTel', $('#serviceTel').val());
+				 store.set('email', $('#email').val());
+				 window.location.href = './toApplyTwo.html?merchId=' + merchId;
+			 }
+		});
+
+		/**
+		 * 表单验证
+		 **/
+		$('input').on('blur', function(){
+			if(!$(this).val()){
+				switch ($(this).attr('name')) {
+					case 'businessLicenseName':
+						$('#businessLicenseName-info').css('display', 'block').text('店铺名称不能为空');
+						$(this).parent('.mui-input-row').removeClass('sucess').addClass('error');
+						break;
+					case 'merchantType':
+						$('#merchantType-info').css('display', 'block').text('店铺名称不能为空');
+						$(this).parent('.mui-input-row').removeClass('sucess').addClass('error');
+						break;
+					case 'businessAddress':
+						$('#businessAddress-info').css('display', 'block').text('详细地址不能为空');
+						$(this).parent('.mui-input-row').removeClass('sucess').addClass('error');
+						break;
+					case 'serviceTel':
+						$('#serviceTel-info').css('display', 'block').text('客服电话不能为空');
+						$(this).parent('.mui-input-row').removeClass('sucess').addClass('error');
+						break;
+					case 'email':
+						$('#email-info').css('display', 'block').text('邮箱地址不能为空');
+						$(this).parent('.mui-input-row').removeClass('sucess').addClass('error');
+						break;
+					default:
+						break;
+				}
+			}else{
+					switch ($(this).attr('name')) {
+						case 'email':
+							if(!validator.isEmail($(this).val())){
+								$('#email-info').css('display', 'block').text('邮箱格式不正确');
+								$(this).parent('.mui-input-row').removeClass('sucess').addClass('error');
+								emailValidator = false;
+							}else{
+								emailValidator = true;
+							}
+							break;
+						case 'serviceTel':
+							if(/^(([0\+]\d{2,3}-)?(0\d{2,3})-)?(\d{7,8})(-(\d{3,}))?$/.test($(this).val()) || /^(1([3456789][0-9]))\d{8}$/.test($(this).val())){
+								break;
+							}else if(!/^(([0\+]\d{2,3}-)?(0\d{2,3})-)?(\d{7,8})(-(\d{3,}))?$/.test($(this).val())){
+								$('#serviceTel-info').css('display', 'block').text('请输入正确的号码:区号-电话号码/手机号');
+								$(this).parent('.mui-input-row').removeClass('sucess').addClass('error');
+								phoneValidator = false;
+								break;
+							}else if(!/^(1([3456789][0-9]))\d{8}$/.test($(this).val())){
+								$('#serviceTel-info').css('display', 'block').text('请输入正确的号码:区号-电话号码/手机号');
+								$(this).parent('.mui-input-row').removeClass('sucess').addClass('error');
+								phoneValidator = false;
+								break;
+							}else{
+								phoneValidator = true;
+							}
+							break;
+						default:
+							break;
+				}
+			}
+		});
+		$('input').on('input', function () {
+			console.log($(this).val());
+			console.log($(this).attr('name'));
+
+			if ($(this).val() && $(this).parent('.mui-input-row').hasClass('error')) {
+				switch ($(this).attr('name')) {
+					case 'businessLicenseName':
+						$('#businessLicenseName-info').css('display', 'none').text('');
+						$(this).parent('.mui-input-row').removeClass('error').addClass('sucess');
+						break;
+					case 'merchantType':
+						$('#merchantType-info').css('display', 'none').text('');
+						$(this).parent('.mui-input-row').removeClass('error').addClass('sucess');
+						break;
+					case 'businessAddress':
+						$('#businessAddress-info').css('display', 'none').text('');
+						$(this).parent('.mui-input-row').removeClass('error').addClass('sucess');
+						break;
+					case 'serviceTel':
+						if (/^(([0\+]\d{2,3}-)?(0\d{2,3})-)?(\d{7,8})(-(\d{3,}))?$/.test($(this).val()) || /^(1(([35][0-9])|(47)|[8][01236789]))\d{8}$/.test($(this).val())) {
+							$('#serviceTel-info').css('display', 'none').text('');
+							$(this).parent('.mui-input-row').removeClass('error').addClass('sucess');
+							phoneValidator = true;
+							break;
+						}else{
+							$('#serviceTel-info').css('display', 'block').text('请输入正确的号码:区号-电话号码/手机号');
+							$(this).parent('.mui-input-row').removeClass('sucess').addClass('error');
+							phoneValidator = false;
+						}
+						break;
+					case 'email':
+						if(validator.isEmail($(this).val())){
+							$('#email-info').css('display', 'none').text('');
+							$(this).parent('.mui-input-row').removeClass('error').addClass('sucess');
+							emailValidator = true;
+						}
+						break;
+					default:
+						break;
+				}
+			}
+		});
+	})(mui, document);
+
+</script>
+
+</html>
