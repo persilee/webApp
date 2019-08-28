@@ -8,8 +8,7 @@
 	<title>聚合收款</title>
 	<link rel="stylesheet" type="text/css" href="../lib/mui-master/dist/css/mui.css" />
 	<link rel="stylesheet" type="text/css" href="../css/common.css" />
-	<link href="../lib/mui-master/examples/hello-mui/css/mui.picker.css" rel="stylesheet" />
-	<link href="../lib/mui-master/examples/hello-mui/css/mui.poppicker.css" rel="stylesheet" />
+	<link href="../lib/mui-master/examples/hello-mui/css/mui.picker.min.css" rel="stylesheet" />
 	<link rel="stylesheet" href="../css/main.css">
 	<style>
 		.list-box .date-box {
@@ -65,6 +64,7 @@
 		}
 		.list-box {
 			display: none;
+			margin-top: 46px;
 		}
 
 		.des-info {
@@ -80,15 +80,74 @@
 		.des-info img {
 			transform: scale(.7);
 		}
+		.mui-bar-nav ~ .mui-content .mui-pull-top-pocket{
+			top: 0px !important;
+		}
+		.title-img{
+			display: flex;
+		}
+		.title-img img {
+			width: 24px;
+			height: 22px;
+			margin: 0 10px;
+		}
+		.mui-content .mui-title.title-box {
+			display: flex;
+			align-items: center;
+    		justify-content: center;
+		}
+		.header-box{
+			position: relative;
+			z-index: 999;
+		}
+		.date-box {
+			position: absolute;
+			z-index: 999;
+			width: 100%;
+			box-shadow: 0px 12px 8px -8px #888;
+			padding: 0 26px;
+			display: none;
+		}
+		.mui-input-row label {
+			text-align: center;
+		}
+		.mui-input-group .mui-button-row {
+			padding: 15px;
+   			margin-bottom: 20px;
+		}
 	</style>
 </head>
 
 <body>
 	<div class="mui-content">
-		<div class="list-box">
-			<ul class="mui-table-view list-ul">
+		<header class="mui-bar mui-bar-nav header-box">
+			<div class="mui-title title-box">
+				<div class="title-img"><img src="../img/icon_rili.png" /></div>
+				<div class="title-info">筛 选</div>
+			</div>
+		</header>
+		<form class="mui-input-group date-box">
+			<div class="mui-input-row">
+				<label>开始时间：</label>
+				<input id="beginTime" name="beginTime" type="text" data-options='{"type":"date","beginYear":2014,"endYear":2019}'
+					class="btn" placeholder="请选择开始时间" readonly="readonly"></input>
+			</div>
+			<div class="mui-input-row">
+				<label>结束时间：</label>
+				<input id="endTime" name="endTime" type="text" data-options='{"type":"date","beginYear":2014,"endYear":2019}'
+					class="btn" placeholder="请选择结束时间" readonly="readonly"></input>
+			</div>
+			<div class="mui-button-row">
+				<button type="button" class="mui-btn mui-btn-primary" disabled="disabled">确认</button>
+				<button type="button" class="mui-btn mui-btn-danger">取消</button>
+			</div>
+		</form>
+		<div id="refreshContainer" class="list-box mui-content mui-scroll-wrapper">
+			<div class="mui-scroll">
+				<ul class="mui-table-view list-ul mui-table-view mui-table-view-chevron">
 				
-			</ul>
+				</ul>
+			</div>
 		</div>
 		<div class="des-info">
 			<div class="des-img"><img src="../img/wushuju.png" alt=""></div>
@@ -99,8 +158,7 @@
 </body>
 <script src="../js/jquery-3.2.1.js"></script>
 <script src="../lib/mui-master/dist/js/mui.js"></script>
-<script src="../lib/mui-master/js/mui.picker.js"></script>
-<script src="../lib/mui-master/js/mui.poppicker.js"></script>
+<script src="../lib/mui-master/examples/hello-mui/js/mui.picker.min.js"></script>
 <script src="../js/moment.min.js"></script>
 <script src="../js/locale/zh-cn.js"></script>
 <script src="../js/store.legacy.min.js"></script>
@@ -108,66 +166,259 @@
 <script type="text/javascript">
 	var merchId = store.get('merchId');
 	var payMerchId = store.get('merchId');
-	(function (mui, doc) {
-		mui.init();
-		mui.ready(function () {
-			var itemList = '';
-			var dataList = [];
-			var totalNum = 0;
-			moment.locale('zh-cn');
-
-			function getPayType(code) {
-				switch (code) {
-					case '12':
-						return '../img/yinlian.png'
-						break;
-					case '13':
-						return '../img/aliPay.png'
-						break;
-					case '14':
-						return '../img/weChat.png'
-						break;
-					default:
-						break;
-				}
-				return '';
+	var itemList = '';
+	var dataList = [];
+	var totalNum = 0;
+	var page = 1;
+	var beginTime = '';
+	var endTime = '';
+	var isSearch = false;
+	moment.locale('zh-cn');
+	
+	function getPayType(code) {
+			switch (code) {
+				case '12':
+					return '../img/yinlian.png'
+					break;
+				case '13':
+					return '../img/aliPay.png'
+					break;
+				case '14':
+					return '../img/weChat.png'
+					break;
+				default:
+					break;
 			}
+			return '';
+		}
 
+	function loadDownPayList() {
+		setTimeout(() => {
 			$.ajax({
 				type: "post",
 				url: payPath + "queryTradeRecord.do",
-				data: { merchId: merchId, page: '1', pageSize: '6' },
+				data: { merchId: merchId, page: page, pageSize: '6', beginTime: beginTime, endTime: endTime},
 				dataType: "json",
 				success: function (response) {
 					console.log(response);
-					
-					if(response.data){
-						$.each(response.data.list, function (i, d) {
+					if (response.data && response.data.lastPage >= page) {
+						if(page == 1){
+							dataList = [];
+							itemList = '';
+						}
+						$('.list-box .list-ul').html('');
+						dataList = [...response.data.list];
+						console.log('dataList', dataList);
+						$.each(dataList, function (i, d) {
 							itemList += `
-							<li class="mui-table-view-cell">
-								<div class="content-box">
-									<div class="img-box">
-										<div class="img"><img src="${getPayType(d.businessCode)}" alt=""></div>
-										<div class="info">
-											<div class="text">收款成功</div>
-											<div class="dsc">${moment(d.settDate).format('LL')}</div>
-										</div>
-									</div>
-									<div class="num-box">
-										￥ ${d.transAmt / 100}
+						<li class="mui-table-view-cell">
+							<div class="content-box">
+								<div class="img-box">
+									<div class="img"><img src="${getPayType(d.businessCode)}" alt=""></div>
+									<div class="info">
+										<div class="text">收款成功</div>
+										<div class="dsc">${moment(d.settDate).format('LL')}</div>
 									</div>
 								</div>
-							</li>
-						`;
+								<div class="num-box">
+									￥ ${d.transAmt / 100}
+								</div>
+							</div>
+						</li>
+					`;
 						});
 						$('.list-box .list-ul').append(itemList);
 						$('.des-info').css('display', 'none');
 						$('.list-box').css('display', 'block');
+						page += 1;
+						console.log(page);
+						mui('#refreshContainer').pullRefresh().endPulldownToRefresh();
+					}else{
+						mui('#refreshContainer').pullRefresh().endPulldownToRefresh(false);
 					}
 				}
 			});
+		}, 1500);
+	};
+	function loadUpPayList() {
+			setTimeout(() => {
+				mui('#refreshContainer').pullRefresh().endPullupToRefresh((page > 2));
+				$.ajax({
+					type: "post",
+					url: payPath + "queryTradeRecord.do",
+					data: { merchId: merchId, page: page, pageSize: '6', beginTime: beginTime, endTime: endTime},
+					dataType: "json",
+					success: function (response) {
+						if (response.data && response.data.lastPage >= page) {
+							if (page == 1) {
+								dataList = [];
+								itemList = '';
+							}
+							$('.list-box .list-ul').html('');
+							dataList = [...response.data.list];
+							console.log(dataList);
 
+							$.each(dataList, function (i, d) {
+								itemList += `
+									<li class="mui-table-view-cell">
+										<div class="content-box">
+											<div class="img-box">
+												<div class="img"><img src="${getPayType(d.businessCode)}" alt=""></div>
+												<div class="info">
+													<div class="text">收款成功</div>
+													<div class="dsc">${moment(d.settDate).format('LL')}</div>
+												</div>
+											</div>
+											<div class="num-box">
+												￥ ${d.transAmt / 100}
+											</div>
+										</div>
+									</li>
+								`;
+							});
+							$('.list-box .search-list-ul').append(itemList);
+							$('.des-info').css('display', 'none');
+							$('.list-box').css('display', 'block');
+							page += 1;
+							console.log(page);
+						} 
+					}
+				});
+			}, 1500);
+		};
+		function loadSearchPayList() {
+				$.ajax({
+				type: "post",
+				url: payPath + "queryTradeRecord.do",
+				data: { merchId: merchId, page: 1, pageSize: '6', beginTime: beginTime, endTime: endTime },
+				dataType: "json",
+				success: function (response) {
+					console.log(response);
+					if (response.data) {
+						$('.list-box .list-ul').html('');
+						dataList = [];
+						itemList = '';
+						dataList = response.data.list;
+						console.log('dataList:', dataList);
+						$.each(dataList, function (i, d) {
+							itemList += `
+								<li class="mui-table-view-cell">
+									<div class="content-box">
+										<div class="img-box">
+											<div class="img"><img src="${getPayType(d.businessCode)}" alt=""></div>
+											<div class="info">
+												<div class="text">收款成功</div>
+												<div class="dsc">${moment(d.settDate).format('LL')}</div>
+											</div>
+										</div>
+										<div class="num-box">
+											￥ ${d.transAmt / 100}
+										</div>
+									</div>
+								</li>
+							`;
+						});
+						$('.list-box .list-ul').html(itemList);
+						$('.des-info').css('display', 'none');
+						$('.list-box').css('display', 'block');
+						$('.date-box').css('display', 'none');
+						if(response.data.total > 6){
+							page = 2
+						}else{
+							page = 1;
+						}
+					}
+				}
+			});
+			};
+	(function (mui, doc) {
+		mui.init(
+			{
+				pullRefresh: {
+					container: "#refreshContainer",//下拉刷新容器标识，querySelector能定位的css选择器均可，比如：id、.class等
+					down: {
+						auto: true,//可选,默认false.首次加载自动下拉刷新一次
+						callback: loadDownPayList //必选，刷新函数，根据具体业务来编写，比如通过ajax从服务器获取新数据；
+    				},
+					up: {
+						contentrefresh: '正在加载...',
+						callback: loadUpPayList
+					}
+				}
+			}
+		);
+		mui.ready(function () {
+			$('.header-box').on('tap', function(){
+				$('.date-box').css('display', 'block');
+			});
+			$('.mui-btn.mui-btn-primary').on('tap', function(){
+				loadSearchPayList();
+			});
+			$('.mui-btn.mui-btn-danger').on('tap', function () {
+				beginTime = '';
+				endTime = '';
+				$('#beginTime').val('');
+				$('#endTime').val('');
+				$('.date-box').css('display', 'none');
+			});
+			$('.btn').on('tap', function () {
+				var _self = this;
+				if (_self.picker) {
+					_self.picker.show(function (rs) {
+						_self.picker.dispose();
+						_self.picker = null;
+					});
+				} else {
+					var optionsJson = this.getAttribute('data-options') || '{}';
+					var options = JSON.parse(optionsJson);
+					var id = this.getAttribute('id');
+					/*
+					 * 首次显示时实例化组件
+					 * 示例为了简洁，将 options 放在了按钮的 dom 上
+					 * 也可以直接通过代码声明 optinos 用于实例化 DtPicker
+					 */
+					_self.picker = new mui.DtPicker(options);
+					_self.picker.show(function (rs) {
+						/*
+						 * rs.value 拼合后的 value
+						 * rs.text 拼合后的 text
+						 * rs.y 年，可以通过 rs.y.vaue 和 rs.y.text 获取值和文本
+						 * rs.m 月，用法同年
+						 * rs.d 日，用法同年
+						 * rs.h 时，用法同年
+						 * rs.i 分（minutes 的第二个字母），用法同年
+						 */
+						$(_self).val(rs.text);
+						console.log($('#beginTime').val());
 
+						if($('#beginTime').val() && $('#endTime').val() && moment($('#beginTime').val()).isAfter($('#endTime').val())){
+							mui.toast('开始日期不能大于结束日期');
+							$('.mui-btn.mui-btn-primary').attr('disabled', 'disabled');
+						}else{
+							$('.mui-btn.mui-btn-primary').removeAttr('disabled');
+						}
+						if($('#beginTime').val()){
+							beginTime = moment($('#beginTime').val()).format('YYYYMMDD');
+						}
+						if($('#endTime').val()){
+							endTime = moment($('#endTime').val()).format('YYYYMMDD');
+						}
+						/* 
+						 * 返回 false 可以阻止选择框的关闭
+						 * return false;
+						 */
+						/*
+						 * 释放组件资源，释放后将将不能再操作组件
+						 * 通常情况下，不需要示放组件，new DtPicker(options) 后，可以一直使用。
+						 * 当前示例，因为内容较多，如不进行资原释放，在某些设备上会较慢。
+						 * 所以每次用完便立即调用 dispose 进行释放，下次用时再创建新实例。
+						 */
+						_self.picker.dispose();
+						_self.picker = null;
+					});
+				}
+
+			});
 			// $.ajax({
 			// 	type: "get",
 			// 	url: "../data/payList.json",
